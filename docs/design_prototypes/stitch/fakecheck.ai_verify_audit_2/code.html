@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>FakeCheck.ai — Visual Authenticity Intelligence</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            slate: {
+              850: '#151f32',
+              900: '#0f172a'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#f8fafc] font-sans text-slate-900 antialiased min-h-screen flex flex-col justify-between">
+<!-- TOP NAVIGATION -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+<div class="max-w-[1240px] mx-auto px-6 h-18 py-3.5 flex items-center justify-between gap-4">
+<!-- Brand Logo -->
+<div class="flex items-center gap-3">
+<a class="flex items-center gap-2" href="#">
+<img alt="FakeCheck.ai" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VfJQU5eG3gjFujEKZkRjUrK2h7a-v4Q80o8F-bx6j2YTqe3LK07bc-uM4TWdw0MNNb8-W4zcHoR3L5CpxeYs-Pe4Q_DSowitopibf6FHvWWNTZdfqwrq_DSoL_bcfTHCxMb0tp8rqbsVRim2TSj64jIOb9Jmux-g-zxfmEEm5KpFRvQ3gPSqfZaL2FnjnHqnQMv7KcIWRJ6XkipEDFAyloooY95c9LiiR7JnmE_3LxOz0RuXP27P7C-sH9"/>
+</a>
+</div>
+<!-- Centered Navigation Links -->
+<nav class="hidden md:flex items-center gap-1 bg-slate-100/70 p-1 rounded-xl border border-slate-200/50">
+<a class="px-4 py-2 rounded-lg text-sm font-semibold bg-[#eff2fe] text-[#4338ca] shadow-xs transition-all" href="#">Verify &amp; Audit</a>
+<a class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#">Scan History</a>
+<a class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#">System Ops</a>
+<a class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/60 transition-all" href="#">How it works</a>
+</nav>
+<!-- Right Action Items -->
+<div class="flex items-center gap-3.5">
+<div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700">
+<span class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></span>
+<span>SerpApi Engine: <strong class="text-slate-900 font-semibold">Operational</strong></span>
+</div>
+<a class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#4f46e5] text-white text-sm font-semibold hover:bg-[#4338ca] transition shadow-sm" href="#">
+          Try Demo Scan
+        </a>
+<div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-xs cursor-pointer hover:bg-slate-800">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT CONTAINER -->
+<main class="flex-1 w-full max-w-[1240px] mx-auto px-6 py-8 flex flex-col gap-10">
+<!-- HERO & AUDIT INPUT -->
+<section class="flex flex-col items-center text-center gap-5 pt-2">
+<div class="flex flex-col items-center max-w-2xl gap-2.5">
+<h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Verify Product Authenticity &amp; Stolen Photos
+        </h1>
+<p class="text-base text-slate-600 leading-relaxed">
+          Detect unauthorized image reuse, deep-discount counterfeit listings, and rogue storefronts powered by SerpApi Google Lens.
+        </p>
+</div>
+<!-- Persona Tabs -->
+<div class="flex items-center p-1 bg-slate-200/70 rounded-xl max-w-md w-full text-xs sm:text-sm font-medium">
+<button class="flex-1 py-2 px-3 rounded-lg bg-white text-[#4338ca] font-semibold shadow-xs flex items-center justify-center gap-1.5 transition">
+<span class="material-symbols-outlined text-[18px]">shopping_bag</span>
+          Check Before You Buy (Shopper)
+        </button>
+<button class="flex-1 py-2 px-3 rounded-lg text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1.5 transition">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+          Protect My Catalog (Creator)
+        </button>
+</div>
+<!-- Quick sample pill -->
+<div class="flex items-center gap-2 text-xs text-slate-500">
+<span class="font-medium text-slate-600">Quick test:</span>
+<button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-50 hover:bg-indigo-100 text-[#4f46e5] font-semibold border border-indigo-200/60 transition">
+<span class="material-symbols-outlined text-[14px]">auto_fix_high</span>
+          Try demo: Handcrafted Brass Earrings (SKU-772)
+        </button>
+</div>
+</section>
+<!-- AUDIT RESULT CARD -->
+<section class="bg-white border border-slate-200/90 rounded-2xl shadow-sm p-6 lg:p-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left: Product Image & Metadata -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<div class="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50 shadow-inner group">
+<img alt="Handcrafted Brass Earrings" class="w-full aspect-square object-cover group-hover:scale-102 transition duration-300" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-semibold px-2.5 py-1 rounded-md shadow-xs">
+              Scanned Asset (1024×1024)
+            </span>
+</div>
+<div class="flex flex-col gap-1.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/70 text-xs">
+<div class="flex justify-between items-center text-slate-500">
+<span class="font-medium">Scan Timestamp:</span>
+<span class="text-slate-800 font-semibold">Uploaded 2 mins ago</span>
+</div>
+<div class="flex justify-between items-center text-slate-500">
+<span class="font-medium">Perceptual Hash:</span>
+<span class="font-mono text-slate-700 bg-white px-2 py-0.5 rounded border border-slate-200">#SHA-256_883a91</span>
+</div>
+<div class="flex justify-between items-center text-slate-500">
+<span class="font-medium">Inspection Status:</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                SerpApi Ingestion Complete
+              </span>
+</div>
+</div>
+</div>
+<!-- Right: AI Risk Verdict & Breakdown -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Trust Score Dial Card -->
+<div class="p-5 rounded-xl bg-amber-50/70 border border-amber-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="relative w-16 h-16 shrink-0 flex items-center justify-center bg-white rounded-full border-2 border-amber-400 shadow-xs">
+<span class="text-2xl font-extrabold text-amber-700">38</span>
+<span class="absolute -bottom-1 text-[9px] font-bold uppercase text-slate-500">/ 100</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-300">
+                    High Risk Disparity
+                  </span>
+<span class="text-xs text-slate-500 font-medium">Confidence: 96.4%</span>
+</div>
+<p class="text-sm font-semibold text-slate-900 leading-snug">
+                  Significant price delta and unauthorized image duplication across 4 unverified domains.
+                </p>
+</div>
+</div>
+<!-- Header Action buttons -->
+<div class="flex sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 text-xs font-semibold shadow-xs transition">
+<span class="material-symbols-outlined text-[16px] text-slate-600">picture_as_pdf</span>
+                Export Incident Report (PDF)
+              </button>
+<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-semibold shadow-xs transition">
+<span class="material-symbols-outlined text-[16px]">gavel</span>
+                Generate 1-Click Takedown Notice
+              </button>
+</div>
+</div>
+<!-- 3 Clean Signal Cards in a Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Signal 1 -->
+<div class="p-4 rounded-xl border border-rose-200/80 bg-rose-50/40 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider text-rose-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_down</span>
+                    Price Disparity
+                  </span>
+<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 text-[10px] font-bold">-84% Extreme Risk</span>
+</div>
+<p class="text-xs text-slate-600 leading-relaxed mt-1">
+                  Original listed at <strong class="text-slate-900 font-semibold">₹1,850 ($22.00)</strong>. Duplicate listings detected as low as <strong class="text-rose-700 font-semibold">₹279–₹349</strong>.
+                </p>
+</div>
+<span class="text-[11px] font-semibold text-rose-800 pt-2 border-t border-rose-100">Severe counterfeit pricing mark</span>
+</div>
+<!-- Signal 2 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">domain_verification</span>
+                    Domain Whitelist
+                  </span>
+<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">4 Rogue Domains</span>
+</div>
+<p class="text-xs text-slate-600 leading-relaxed mt-1">
+                  1 Whitelisted source (AuraBrass Studio on Etsy), 4 unverified rogue storefronts registered &lt;30 days.
+                </p>
+</div>
+<span class="text-[11px] font-semibold text-slate-600 pt-2 border-t border-slate-200">Shopify &amp; NameCheap ephemeral hosts</span>
+</div>
+<!-- Signal 3 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 flex flex-col justify-between gap-3">
+<div class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider text-indigo-700 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">fingerprint</span>
+                    Fingerprint Match
+                  </span>
+<span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px] font-bold">100% Exact Match</span>
+</div>
+<p class="text-xs text-slate-600 leading-relaxed mt-1">
+                  100% exact pixel match. Cropping and background removal detected on social ad funnels.
+                </p>
+</div>
+<span class="text-[11px] font-semibold text-indigo-700 pt-2 border-t border-slate-200">Exact lens composition cluster</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MATCHES TABLE SECTION -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-2.5">
+<h2 class="text-xl font-bold text-slate-900 tracking-tight">Everywhere This Image Was Found</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-[#eff2fe] text-[#4338ca] text-xs font-bold">
+            8 Sources
+          </span>
+</div>
+<!-- Filter Chips -->
+<div class="flex flex-wrap items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+<button class="px-3 py-1 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-xs">
+            All Matches (8)
+          </button>
+<button class="px-3 py-1 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">
+            Whitelisted / Official (1)
+          </button>
+<button class="px-3 py-1 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">
+            High Disparity / Flagged (4)
+          </button>
+<button class="px-3 py-1 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 transition">
+            Marketplace &amp; Social (3)
+          </button>
+</div>
+</div>
+<!-- Table Container -->
+<div class="w-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-500 font-bold">
+<tr>
+<th class="py-3.5 px-4">Found Source &amp; Domain</th>
+<th class="py-3.5 px-4">Detected Price</th>
+<th class="py-3.5 px-4">Verification Signal</th>
+<th class="py-3.5 px-4">First Indexed</th>
+<th class="py-3.5 px-4 text-right">Action / Investigation</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200/70 text-slate-700">
+<!-- Row 1: AuraBrass -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="AuraBrass" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">AuraBrass Studio (Original Creator)</div>
+<a class="text-xs text-[#4f46e5] font-mono hover:underline inline-flex items-center gap-0.5" href="#">
+                        etsy.com/shop/aurabrass <span class="material-symbols-outlined text-[13px]">open_in_new</span>
+</a>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 font-mono font-bold text-slate-900">
+                  ₹1,850 <span class="text-xs font-normal text-slate-500">($22.00)</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                    Whitelisted &amp; Verified Origin
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  14 Nov 2024
+                </td>
+<td class="py-3.5 px-4 text-right">
+<span class="px-2.5 py-1 rounded bg-slate-100 text-slate-700 text-xs font-semibold border border-slate-200">
+                    Authoritative Baseline
+                  </span>
+</td>
+</tr>
+<!-- Row 2: TrendShoppe-India.shop -->
+<tr class="bg-rose-50/30 hover:bg-rose-50/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="TrendShoppe" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">TrendShoppe-India.shop</div>
+<div class="text-xs text-rose-600 font-mono">Unverified Shopify Host • Inactive Registrar</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono font-bold text-rose-700 text-sm">₹299</div>
+<div class="text-[10px] font-bold text-rose-600 uppercase">-84% vs Original</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                    Flagged: Extreme Disparity
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  03 Jan 2026
+                </td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1.5">
+<button class="px-2.5 py-1 rounded bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold border border-slate-300 transition">
+                      Inspect Domain
+                    </button>
+<button class="px-2.5 py-1 rounded bg-indigo-50 hover:bg-indigo-100 text-[#4338ca] text-xs font-semibold border border-indigo-200 transition">
+                      View Crop
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 3: BoutiqueDeals24.online -->
+<tr class="bg-rose-50/20 hover:bg-rose-50/50 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="BoutiqueDeals" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">BoutiqueDeals24.online</div>
+<div class="text-xs text-slate-500 font-mono">Registered 19 days ago via NameCheap</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono font-bold text-rose-700 text-sm">₹349</div>
+<div class="text-[10px] font-bold text-rose-600 uppercase">-81% vs Original</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
+<span class="material-symbols-outlined text-[14px]">gpp_maybe</span>
+                    Clone Listing Detected
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  08 Jan 2026
+                </td>
+<td class="py-3.5 px-4 text-right">
+<button class="px-2.5 py-1 rounded bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold border border-slate-300 transition">
+                    Inspect
+                  </button>
+</td>
+</tr>
+<!-- Row 4: FabLuxeIndia.co -->
+<tr class="bg-rose-50/20 hover:bg-rose-50/50 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="FabLuxe" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">FabLuxeIndia.co</div>
+<div class="text-xs text-slate-500 font-mono">Meta Ads Campaign ID #9182049</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono font-bold text-rose-700 text-sm">₹279</div>
+<div class="text-[10px] font-bold text-rose-600 uppercase">-85% vs Original</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">
+<span class="material-symbols-outlined text-[14px]">campaign</span>
+                    Active Bait Ad Destination
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  12 Jan 2026
+                </td>
+<td class="py-3.5 px-4 text-right">
+<button class="px-2.5 py-1 rounded bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold border border-slate-300 transition">
+                    Ad Archive
+                  </button>
+</td>
+</tr>
+<!-- Row 5: Instagram Sponsored Ad -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Instagram" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">Instagram Sponsored Ad (Archived)</div>
+<div class="text-xs text-slate-500 font-mono">Feed Carousel Lead Gen</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-xs text-slate-500 font-mono">
+                  Unlisted in Caption
+                </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                    Social Ad Ingestion
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  10 Jan 2026
+                </td>
+<td class="py-3.5 px-4 text-right">
+<span class="text-xs font-medium text-slate-500">Archived Snap</span>
+</td>
+</tr>
+<!-- Row 6: Pinterest Board -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Pinterest" class="w-9 h-9 rounded-lg object-cover border border-slate-200" src="https://lh3.googleusercontent.com/aida/AEtjO1UtcFJngdZLKd5wNGDliPLMyt1eLZwsG6IRDdETVw54PHQy6wUo3cdMPRJQK6L_gBoGAkdBNoNkzvwnCVlBeWYhHRAGRjtQYOwV8G21dx3q98eFwaYzoGg0sN1RFRSBuEVCOqU1gjWE4kuuaQtj8RF8CR1UnOIJ1MHEOjHAKX7ETfOI68-kMLtIvh7qoIGFNL3Ky3IkP9l_H7rbSIrimE-5CQO5YOQ9Q1lNCOvmh6TXvF2FMEzrDjK_sMGR"/>
+<div>
+<div class="font-bold text-slate-900 text-sm">Pinterest Board: Handcrafted Jewelry Ideas</div>
+<div class="text-xs text-slate-500 font-mono">pinterest.com/pin/889201...</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-xs text-slate-500 font-mono">
+                  N/A (Social Pin)
+                </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">push_pin</span>
+                    Attribution / Non-Commerce
+                  </span>
+</td>
+<td class="py-3.5 px-4 text-xs font-mono text-slate-500">
+                  22 Nov 2024
+                </td>
+<td class="py-3.5 px-4 text-right">
+<span class="text-xs font-semibold text-emerald-700">Credits AuraBrass</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer -->
+<div class="p-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+<div class="flex items-center gap-1.5 text-slate-600">
+<span class="material-symbols-outlined text-[16px] text-slate-500">sync</span>
+<span>Showing 6 of 8 indexed matches. 2 secondary mirror endpoints collapsed.</span>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-slate-800 font-semibold border border-slate-200 shadow-2xs transition">
+            Load Complete Raw SerpApi JSON Response
+          </button>
+</div>
+</div>
+</section>
+<!-- RISK TAXONOMY & EXPLAINABILITY -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<h3 class="text-lg font-bold text-slate-900">How FakeCheck.ai Evaluates Authenticity</h3>
+<p class="text-xs text-slate-500">Automated signal taxonomy and algorithmic confidence weighting methodology.</p>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Card 1 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-white flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+<span class="font-bold text-slate-900 text-xs">Whitelisted / Trusted</span>
+</div>
+<span class="text-[11px] font-semibold text-emerald-700 font-mono">Score 85–100</span>
+<p class="text-xs text-slate-600 leading-relaxed">
+            Matched directly to verified brand or accredited partner storefront with verified registrar age.
+          </p>
+</div>
+<!-- Card 2 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-white flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+<span class="font-bold text-slate-900 text-xs">Caution &amp; Risk Flags</span>
+</div>
+<span class="text-[11px] font-semibold text-amber-700 font-mono">Score 25–65</span>
+<p class="text-xs text-slate-600 leading-relaxed">
+            Visual duplicates with severe price disparity or generic TLDs (&lt;90 day domain life).
+          </p>
+</div>
+<!-- Card 3 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-white flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span>
+<span class="font-bold text-slate-900 text-xs">Insufficient Matches</span>
+</div>
+<span class="text-[11px] font-semibold text-slate-600 font-mono">Neutral</span>
+<p class="text-xs text-slate-600 leading-relaxed">
+            One-of-a-kind bespoke items with zero web copies. Recommended for manual reverse review.
+          </p>
+</div>
+<!-- Card 4 -->
+<div class="p-4 rounded-xl border border-slate-200 bg-white flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4f46e5]"></span>
+<span class="font-bold text-slate-900 text-xs">Cached Resiliency</span>
+</div>
+<span class="text-[11px] font-semibold text-[#4f46e5] font-mono">Snapshot</span>
+<p class="text-xs text-slate-600 leading-relaxed">
+            Upstream fail-closed fallback timestamped gracefully against authoritative catalog hashes.
+          </p>
+</div>
+</div>
+</section>
+</main>
+<!-- CLEAN PROFESSIONAL FOOTER -->
+<footer class="w-full bg-white border-t border-slate-200/80 mt-12">
+<div class="max-w-[1240px] mx-auto px-6 py-8 flex flex-col gap-6">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<img alt="FakeCheck.ai" class="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VfJQU5eG3gjFujEKZkRjUrK2h7a-v4Q80o8F-bx6j2YTqe3LK07bc-uM4TWdw0MNNb8-W4zcHoR3L5CpxeYs-Pe4Q_DSowitopibf6FHvWWNTZdfqwrq_DSoL_bcfTHCxMb0tp8rqbsVRim2TSj64jIOb9Jmux-g-zxfmEEm5KpFRvQ3gPSqfZaL2FnjnHqnQMv7KcIWRJ6XkipEDFAyloooY95c9LiiR7JnmE_3LxOz0RuXP27P7C-sH9"/>
+</div>
+<p class="text-xs text-slate-500 max-w-xl">
+            Product authenticity &amp; reverse image intelligence utility powered by SerpApi Google Lens Engine.
+          </p>
+</div>
+<div class="flex items-center gap-2 text-xs font-semibold text-slate-600 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          Engine Status: 99.98% Operational
+        </div>
+</div>
+<div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+<p>© 2026 FakeCheck.ai. All rights reserved.</p>
+<div class="flex items-center gap-6">
+<a class="hover:text-slate-900 transition" href="#">Documentation</a>
+<a class="hover:text-slate-900 transition" href="#">API Metrics</a>
+<a class="hover:text-slate-900 transition" href="#">Privacy &amp; Terms</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

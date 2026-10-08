@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>FakeCheck.ai — Visual Authenticity Intelligence</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"tertiary-fixed":"#6ffbbe","surface-container-low":"#eff4ff","outline-variant":"#c6c6cd","tertiary-fixed-dim":"#4edea3","on-error-container":"#93000a","primary":"#000000","on-error":"#ffffff","on-tertiary-fixed-variant":"#005236","surface-container-lowest":"#ffffff","background":"#f8f9ff","on-tertiary":"#ffffff","surface-container-highest":"#d3e4fe","on-secondary-fixed-variant":"#3323cc","inverse-primary":"#bec6e0","on-tertiary-fixed":"#002113","error":"#ba1a1a","on-primary-fixed":"#131b2e","tertiary":"#000000","on-background":"#0b1c30","inverse-surface":"#213145","error-container":"#ffdad6","primary-fixed":"#dae2fd","surface-bright":"#f8f9ff","secondary-fixed":"#e2dfff","surface":"#f8f9ff","on-secondary":"#ffffff","inverse-on-surface":"#eaf1ff","on-primary":"#ffffff","on-secondary-container":"#fffbff","secondary":"#4b41e1","on-secondary-fixed":"#0f0069","surface-tint":"#565e74","surface-dim":"#cbdbf5","secondary-fixed-dim":"#c3c0ff","on-surface":"#0b1c30","on-tertiary-container":"#009668","surface-variant":"#d3e4fe","on-primary-container":"#7c839b","surface-container-high":"#dce9ff","tertiary-container":"#002113","on-surface-variant":"#45464d","primary-container":"#131b2e","secondary-container":"#645efb","outline":"#76777d","primary-fixed-dim":"#bec6e0","surface-container":"#e5eeff","on-primary-fixed-variant":"#3f465c"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-sm":"0.5rem","gutter-sm":"1rem","space-xl":"2.5rem","margin-sm":"1rem","space-md":"1rem","space-xs":"0.25rem","space-lg":"1.5rem","margin":"2rem","gutter":"1.5rem"},"fontFamily":{"label-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"data-mono":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"]},"fontSize":{"label-lg":["14px",{"lineHeight":"20px","letterSpacing":"0.01em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"700"}],"headline-lg-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"data-mono":["13px",{"lineHeight":"18px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"display":["40px",{"lineHeight":"48px","letterSpacing":"-0.03em","fontWeight":"800"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1200px] mx-auto px-gutter flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="FakeCheck.ai Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WB9bnY_brcL_EnXOIXon2TqDxkMcgietLfxsykGoGxG6dafb4lgXcS44AOFVdrOj-ZI3gUt8hhHgYqQoUKMMMfUuLU025VvgK5hjb4vaxS3V_4lvfZ7yJ6J9mgMZRQv-Y_i9ZqeW8L_qE5jybzki9PvGL-kO-FOKCWKbZJEyl3m5X0QNTazQK6s4qJeKMF72I8xEvVT_yCzNgpoXHd3WszMEYOO9wWulkd4quU6ZqkbH__zUDETU0eoA9P"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">FakeCheck<span class="text-secondary">.ai</span></span><span class="hidden sm:inline-flex items-center px-space-sm py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">SerpApi Hackathon '26</span></div><nav class="hidden lg:flex items-center gap-space-xs" data-active-classes="bg-surface-container-low text-secondary font-label-lg rounded-lg"><a class="px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" data-path="verify-audit" href="#">Verify &amp; Audit</a><a aria-current="page" class="px-space-md py-space-sm transition-all bg-surface-container-low text-secondary font-label-lg rounded-lg" data-path="scan-history" href="#">Scan History</a><a class="px-space-md py-space-sm rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-all" data-path="system-ops-health" href="#">System Ops &amp; Health</a></nav></div><div class="flex items-center gap-space-md"><a class="hidden md:inline-flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How it works</a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-space-xs rounded-full bg-surface-container-low text-on-surface font-label-sm text-label-sm shadow-[0_1px_3px_rgba(15,23,42,0.04)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed-dim opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-on-tertiary-container"></span></span><span class="font-label-sm text-label-sm text-on-surface-variant">SerpApi Engine: <span class="font-bold text-on-surface">Operational</span></span></div><a class="inline-flex items-center justify-center px-space-md py-space-sm rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg hover:bg-secondary-container transition-all shadow-[0_2px_4px_rgba(75,65,225,0.15)]" data-path="verify-audit" href="#">Try Demo Scan</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-140px)]"><div class="flex flex-col w-full">
+<!-- Interactive & Alert State Banner -->
+<div class="w-full bg-secondary-fixed text-on-secondary-fixed py-space-sm px-gutter">
+<div class="max-w-[1200px] mx-auto flex items-center justify-between gap-space-md text-label-md">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-secondary text-on-secondary">
+<span class="material-symbols-outlined text-[13px]">shield</span>
+</span>
+<span>
+<strong class="font-bold">Catalog Guard Active:</strong> Weekly SerpApi Lens batch sweep completed 42 mins ago. <strong>3 new rogue visual matches</strong> detected on unauthorized shop funnels.
+        </span>
+</div>
+<div class="flex items-center gap-space-md">
+<a class="underline hover:text-on-secondary-fixed-variant transition-colors" href="#takedown-section">Review Notices</a>
+<button class="text-on-secondary-fixed opacity-70 hover:opacity-100" onclick="this.closest('.w-full').remove()">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-gutter py-space-xl w-full flex flex-col gap-space-xl">
+<!-- DASHBOARD HEADER -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-2xl">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+            Workspace: Artisan Studios • Pro Account
+          </span>
+<span class="text-outline-variant text-label-sm">•</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span> SerpApi Live Feed
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Audit History &amp; Catalog Protection</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Track past reverse-image audits, monitor your catalog photos for unauthorized clones, and view historical risk reports with one-click takedown generation.
+        </p>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm shrink-0">
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+          Export Audit Log (CSV)
+        </button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-all" id="configAlertsBtn">
+<span class="material-symbols-outlined text-[18px]">notifications_active</span>
+          Configure Auto-Alerts
+        </button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-secondary text-on-secondary font-label-lg text-label-lg shadow-md hover:bg-secondary-container transition-all">
+<span class="material-symbols-outlined text-[18px]">add_photo_alternate</span>
+          + New Photo Audit
+        </button>
+</div>
+</div>
+<!-- 4 STATS METRIC CARDS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Total Audits</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">manage_search</span>
+</div>
+</div>
+<div class="my-space-md">
+<div class="font-display text-display text-on-surface tracking-tight">42 <span class="font-headline-sm text-headline-sm font-semibold text-on-surface-variant">Scans</span></div>
+<div class="mt-space-xs inline-flex items-center gap-1 font-label-sm text-label-sm text-on-tertiary-container">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+12 scans this week</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 70%;"></div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Unauthorized Copies</span>
+<div class="w-8 h-8 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+</div>
+</div>
+<div class="my-space-md">
+<div class="font-display text-display text-on-surface tracking-tight">19 <span class="font-headline-sm text-headline-sm font-semibold text-error">Rogue Stores</span></div>
+<div class="mt-space-xs inline-flex items-center gap-1 font-label-sm text-label-sm text-error">
+<span class="material-symbols-outlined text-[14px]">error</span>
+<span>4 deep-discount clones active</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 45%;"></div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Protected Catalog</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+</div>
+</div>
+<div class="my-space-md">
+<div class="font-display text-display text-on-surface tracking-tight">14 <span class="font-headline-sm text-headline-sm font-semibold text-on-surface-variant">Products</span></div>
+<div class="mt-space-xs inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span>Continuous Lens crawl active</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 88%;"></div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Resolved Takedowns</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+</div>
+<div class="my-space-md">
+<div class="font-display text-display text-on-surface tracking-tight">7 <span class="font-headline-sm text-headline-sm font-semibold text-on-tertiary-container">Notices</span></div>
+<div class="mt-space-xs inline-flex items-center gap-1 font-label-sm text-label-sm text-on-tertiary-container">
+<span class="material-symbols-outlined text-[14px]">task_alt</span>
+<span>100% host acknowledgment rate</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-on-tertiary-container h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+<!-- MAIN DASHBOARD CONTENT AREA -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT 8-COLS: TABLE & FILTER MODULE -->
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+<!-- Filter Tabs & Quick Sort Strip -->
+<div class="p-space-sm rounded-xl bg-surface-container-lowest shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0" id="filterTabs">
+<button class="filter-tab active px-space-md py-space-sm rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md shrink-0 transition-colors" data-filter="all">
+              All Scans <span class="ml-1 opacity-70">(42)</span>
+</button>
+<button class="filter-tab px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md shrink-0 transition-colors" data-filter="creator">
+              Creator Audits <span class="ml-1 opacity-70">(18)</span>
+</button>
+<button class="filter-tab px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-md text-label-md shrink-0 transition-colors" data-filter="buyer">
+              Buyer Checks <span class="ml-1 opacity-70">(24)</span>
+</button>
+<button class="filter-tab px-space-md py-space-sm rounded-lg text-error hover:bg-error-container/40 font-label-md text-label-md shrink-0 transition-colors" data-filter="action">
+<span class="inline-block w-2 h-2 rounded-full bg-error mr-1"></span> Action Required <span class="ml-1 font-bold">(6)</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm px-space-sm">
+<span>Sort by:</span>
+<select class="bg-surface-container-low px-space-sm py-1 rounded text-on-surface font-label-sm focus:outline-none cursor-pointer">
+<option>Newest Scan Date</option>
+<option>Lowest Trust Score</option>
+<option>Most Rogue Matches</option>
+</select>
+</div>
+</div>
+<!-- Search & Advanced Filter Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-space-sm p-space-md bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="sm:col-span-6 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full h-11 pl-10 pr-space-md rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-secondary/20 placeholder:text-on-surface-variant/60" id="scanSearchInput" placeholder="Search by product name, SKU, domain, or image ID..." type="text"/>
+</div>
+<div class="sm:col-span-3 flex items-center">
+<select class="w-full h-11 px-space-sm rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md focus:outline-none">
+<option value="">All Risk Tiers</option>
+<option value="high">High Risk (0-40)</option>
+<option value="moderate">Moderate Disparity (41-75)</option>
+<option value="whitelisted">Whitelisted &amp; Verified (76-100)</option>
+<option value="insufficient">Insufficient Data (Neutral)</option>
+</select>
+</div>
+<div class="sm:col-span-3 flex items-center">
+<div class="w-full h-11 px-space-sm rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Last 30 Days</span>
+</div>
+<span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- AUDIT SCANS TABLE CONTAINER -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-space-md px-space-md">Scanned Item</th>
+<th class="py-space-md px-space-sm">Scan Engine &amp; Date</th>
+<th class="py-space-md px-space-sm">Risk Score</th>
+<th class="py-space-md px-space-sm">Matches Found</th>
+<th class="py-space-md px-space-sm">Primary Signal</th>
+<th class="py-space-md px-space-md text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<!-- ROW 1: Handcrafted Brass Earrings (Image 3) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors scan-row" data-status="amber" data-type="creator">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img alt="Handcrafted brass artisan earrings jewelry piece" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB719GQU-vTeyF2ys3H73Gux3Va6IGFf_TMBsQlXRyzee68GVfY1gNjTVaLTs5yvTyP3rBhd9ES6383MFv8fbH91HWbU9HzsXVCVJzhqzquLo-2ZzvQt2l3-p_NXtnDfyPTbx7cfr1F4D3sMEfVlRxBa4WDBv2Ed-ilQewYPhmzatJhNG4PmYh2fdSOxluBYFAucf_8iwayPW0sFf8ttwfVZgtBj6J9hX0VlG2aCVDSbMpgvJRBtl2bQw"/>
+<span class="absolute bottom-0 right-0 px-1 py-0.2 bg-primary/80 text-on-primary font-label-sm text-[9px] rounded-tl">SKU-772</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface truncate">Handcrafted Brass Earrings</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-secondary font-label-sm text-[10px]">CREATOR ASSET</span>
+<span class="text-on-surface-variant text-[11px]">• ₹1,850 Original</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-on-surface">Oct 24, 2026</span>
+<span class="text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> SerpApi Lens Cache
+                      </span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="px-space-sm py-0.5 rounded-full bg-[#FFFBEB] text-[#92400E] font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#F59E0B]"></span> 38/100
+                        </span>
+<span class="font-label-sm text-label-sm text-[#92400E] font-semibold">Flagged</span>
+</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-[#F59E0B] h-full" style="width: 38%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">8 Domains</span>
+<span class="text-error font-label-sm text-[11px]">4 rogue clone funnels</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-error text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">price_change</span>
+                        Price disparity -84%
+                      </span>
+<span class="text-on-surface-variant text-[11px] truncate max-w-[140px]">Listed at ₹299 on shady.xyz</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-surface-container-high rounded transition-colors" title="View Full Inspection Report">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-error hover:bg-error-container rounded transition-colors" onclick="triggerNoticeDraft('Handcrafted Brass Earrings', 'shadyboutique.xyz/deal-77', '₹299', 'Oct 24, 2026')" title="Generate DMCA Takedown">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" title="Rescan with SerpApi Lens">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 2: Pure Kashmiri Pashmina Shawl -->
+<tr class="hover:bg-surface-container-low/50 transition-colors scan-row" data-status="high-risk" data-type="creator">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Luxurious authentic Kashmiri pashmina wool shawl draped on wooden mannequin, warm ambient studio lighting, soft texture woven textile craft, clean e-commerce background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQYTe7kKG1QoEN1vPcg7lJ2hzQULw8I2dwiUZPlOSBOblbdNNIHX3Amgujqyr9lr2LRcyBPhNi0aqAFwBC_sneQrhDc0DAujcCtygRmCN8_xdTykjnel_4MEwxjKv4l0IEB_pw0StjT36Frh0hxeYn_aat7N_TI7ediPZHNrqMbE0Fd0yntC5Y53NB38-qf_zGWELW4waKOX1y70g1Lzs8Lw0_vIgl3uUtShPYlWlTO9JyrUXNbsAMgw"/>
+<span class="absolute bottom-0 right-0 px-1 py-0.2 bg-primary/80 text-on-primary font-label-sm text-[9px] rounded-tl">SKU-802</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface truncate">Pure Kashmiri Pashmina Shawl</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-high text-secondary font-label-sm text-[10px]">CREATOR ASSET</span>
+<span class="text-on-surface-variant text-[11px]">• ₹14,500 Original</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-on-surface">Oct 23, 2026</span>
+<span class="text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> SerpApi Lens Deep
+                      </span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="px-space-sm py-0.5 rounded-full bg-[#FEF2F2] text-[#991B1B] font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span> 18/100
+                        </span>
+<span class="font-label-sm text-label-sm text-error font-semibold">High Risk</span>
+</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 18%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">14 Domains</span>
+<span class="text-error font-label-sm text-[11px]">Stolen Etsy photo funnel</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-error text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">campaign</span>
+                        Active FB Scam Ad
+                      </span>
+<span class="text-on-surface-variant text-[11px] truncate max-w-[140px]">Pixel tracked on 3 drop sites</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-surface-container-high rounded transition-colors" title="View Full Inspection Report">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-error hover:bg-error-container rounded transition-colors" onclick="triggerNoticeDraft('Pure Kashmiri Pashmina Shawl', 'silkway-offers.store', '₹799', 'Oct 23, 2026')" title="Generate DMCA Takedown">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" title="Rescan with SerpApi Lens">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 3: Artisanal Ceramic Coffee Mug -->
+<tr class="hover:bg-surface-container-low/50 transition-colors scan-row" data-status="verified" data-type="buyer">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Minimalist handcrafted speckled ceramic coffee mug on a natural wooden coffee table, morning daylight softly highlighting handmade glaze texture, commercial product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe7mkCGGPLT_kcDpzRyI61SQLG-5DGk_CRNS-5evuVVkHX8bDuoeBldMa2XZ4uZ83dkM34yeodgdCgKtXwywC2k1XWURpILQmDpjTgrSrYaDUFagzN4jOp2JQ2Sb1ZYmoWl-ab-x1146HQGITuDmKscDzpFHAABo_GPP_6R0hjbBKa3AX7hbKfmEnH1ZK0bqE5CrYFQlKog8AhdVQQqLTKi_92exVeWvbCzc_0Zt5fnosl-1DQT9KFlw"/>
+<span class="absolute bottom-0 right-0 px-1 py-0.2 bg-primary/80 text-on-primary font-label-sm text-[9px] rounded-tl">BUY-309</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface truncate">Artisanal Ceramic Mug (Matte)</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-low text-on-surface font-label-sm text-[10px]">BUYER CHECK</span>
+<span class="text-on-surface-variant text-[11px]">• ₹890 Checked</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-on-surface">Oct 22, 2026</span>
+<span class="text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span> SerpApi Lens Fast-Cache
+                      </span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="px-space-sm py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span> 96/100
+                        </span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-semibold">Whitelisted</span>
+</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-on-tertiary-container h-full" style="width: 96%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">2 Domains</span>
+<span class="text-on-tertiary-container font-label-sm text-[11px]">Official Shopify &amp; Tata CLiQ</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-tertiary-container text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                        Authorized Merchant
+                      </span>
+<span class="text-on-surface-variant text-[11px] truncate max-w-[140px]">Price within normal ±4% band</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-surface-container-high rounded transition-colors" title="View Full Inspection Report">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" title="Share Safety Receipt">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 4: Custom Silver Pendant (Insufficient Data) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors scan-row" data-status="insufficient" data-type="buyer">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Engraved sterling silver artisan pendant jewelry with floral filigree work laying on dark slate stone background, crisp macro focus, soft directional reflection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWcCESCfk0cJSrTNBKIvTBea8mjay4D78wLJcrjoexvGiHjT5kdgU6mbi6UE0o1Noqmpe8fWhqiizyplaP1aTk_VVmHcfbXd3t3OanihdIjUoZItELevuCBdlfWdUUFa0XqIzHdsWaSykvY6TZgPWWHASWeZoL3WCas-dx5aqhaFOqk5RsaXyw8r2uLhdDt3lObv6xXTnJ21jrZumKmRvbAp71O9CplFh91O7rHf7f9-UEEMdTT2PVvA"/>
+<span class="absolute bottom-0 right-0 px-1 py-0.2 bg-primary/80 text-on-primary font-label-sm text-[9px] rounded-tl">BUY-119</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface truncate">Custom Silver Filigree Pendant</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-low text-on-surface font-label-sm text-[10px]">BUYER CHECK</span>
+<span class="text-on-surface-variant text-[11px]">• ₹3,200 Listed</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-on-surface">Oct 21, 2026</span>
+<span class="text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> SerpApi Global Index
+                      </span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-outline"></span> N/A
+                        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Neutral Data</span>
+</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-outline h-full" style="width: 25%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">1 Domain Only</span>
+<span class="text-on-surface-variant font-label-sm text-[11px]">Single instance indexed</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface-variant text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                        Insufficient Web Footprint
+                      </span>
+<span class="text-on-surface-variant text-[11px] truncate max-w-[140px]">May be unique 1-of-1 craft</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-surface-container-high rounded transition-colors" title="View Full Inspection Report">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" title="Trigger Deeper Lens Re-crawl">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- ROW 5: Handwoven Jute Tote Bag -->
+<tr class="hover:bg-surface-container-low/50 transition-colors scan-row" data-status="low-risk" data-type="buyer">
+<td class="py-space-md px-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative w-14 h-14 rounded-lg overflow-hidden shrink-0 shadow-sm bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Eco friendly handwoven natural jute tote bag with brown leather handles, isolated studio shot on white background, subtle natural shadows, sustainable fashion accessory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Wk25Jy7sGEs7I_zWiJ-YyhIZiRJHG84jZgfL_uUplTsxFTYCqmA3wHEynMPdAS9xDVf0ndZLnMqqbwGoW7xB1TQ2XCFarCLj6kyplhq916A0TQKuqOu-YsgqUuBuqm7qRadBRhX3MVlG0QHGFMQREUzmeaEku1Adl5st-dL-SBlE40FUFnA3qfgVfYeR3WnZSFdNBHkNbKNf8VgQOlyty15QQMknH0tNd0nHU7Wnc9KKuDUbPLOSGQ"/>
+<span class="absolute bottom-0 right-0 px-1 py-0.2 bg-primary/80 text-on-primary font-label-sm text-[9px] rounded-tl">BUY-842</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface truncate">Handwoven Jute Tote Bag</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-space-xs py-0.5 rounded bg-surface-container-low text-on-surface font-label-sm text-[10px]">BUYER CHECK</span>
+<span class="text-on-surface-variant text-[11px]">• ₹1,199 Checked</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-data-mono text-data-mono text-on-surface">Oct 19, 2026</span>
+<span class="text-on-surface-variant text-[11px] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> SerpApi Lens
+                      </span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-1.5">
+<span class="px-space-sm py-0.5 rounded-full bg-[#ECFDF5] text-[#065F46] font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span> 82/100
+                        </span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-semibold">Low Risk</span>
+</div>
+<div class="w-24 bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="bg-on-tertiary-container h-full" style="width: 82%;"></div>
+</div>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">6 Domains</span>
+<span class="text-on-surface-variant font-label-sm text-[11px]">Nykaa, Myntra &amp; Brand D2C</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">store</span>
+                        Authorized Multi-Channel
+                      </span>
+<span class="text-on-surface-variant text-[11px] truncate max-w-[140px]">Standard holiday sale promo</span>
+</div>
+</td>
+<td class="py-space-md px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-surface-container-high rounded transition-colors" title="View Full Inspection Report">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors" title="Share Verification Link">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination Footer -->
+<div class="p-space-md bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span>Showing <strong>5</strong> of <strong>42</strong> verified reverse-image audits</span>
+<div class="inline-flex items-center gap-1">
+<button class="px-space-sm py-1 rounded bg-surface-container-low text-on-surface-variant disabled:opacity-50" disabled="">Previous</button>
+<button class="px-space-sm py-1 rounded bg-secondary text-on-secondary font-bold">1</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high">2</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high">3</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-low text-on-surface hover:bg-surface-container-high">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT 4-COLS: DMCA & TAKEDOWN TOOLKIT SIDE PANEL -->
+<div class="lg:col-span-4 flex flex-col gap-space-md" id="takedown-section">
+<!-- Interactive DMCA Notice Generator Card -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-md flex flex-col gap-space-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">gavel</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Takedown Generator</h2>
+</div>
+<span class="px-space-sm py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[11px] uppercase">
+              1-Click DMCA
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Generate legally compliant cease-and-desist notices backed by SerpApi visual match provenance timestamps.
+          </p>
+<!-- Pre-filled Takedown Form Box -->
+<div class="flex flex-col gap-space-sm p-space-md rounded-lg bg-surface-container-low">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Infringed Catalog Item</label>
+<input class="w-full px-space-sm py-2 rounded bg-surface-container-lowest text-on-surface font-body-sm text-body-sm focus:outline-none" id="dmcaItemName" type="text" value="Handcrafted Brass Earrings (SKU-772)"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Target Offending URL</label>
+<input class="w-full px-space-sm py-2 rounded bg-surface-container-lowest text-on-surface font-body-sm text-body-sm focus:outline-none" id="dmcaTargetUrl" type="text" value="https://shadyboutique.xyz/deal-77-brass"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Detected Host / Provider</label>
+<div class="flex items-center justify-between text-on-surface-variant font-data-mono text-[12px] bg-surface-container-lowest px-space-sm py-2 rounded">
+<span>Cloudflare DNS / Hostinger VPS</span>
+<span class="text-on-tertiary-container font-semibold">Resolved</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold">Evidence Payload</label>
+<div class="p-2 rounded bg-surface-container-lowest text-[11px] text-on-surface-variant leading-relaxed">
+                Includes SerpApi hash proof <span class="font-data-mono">#SHA-256_883a91</span>, original publication date (Sep 14, 2025), and 98.4% visual pixel similarity cluster.
+              </div>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<button class="w-full h-11 inline-flex items-center justify-center gap-space-xs rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-all" onclick="copyGeneratedNotice()">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+<span id="copyBtnText">Copy Pre-filled DMCA Notice</span>
+</button>
+<button class="w-full h-11 inline-flex items-center justify-center gap-space-xs rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container transition-all" onclick="dispatchHostNotice()">
+<span class="material-symbols-outlined text-[18px]">send</span>
+              Submit Notice via Host Abuse API
+            </button>
+</div>
+<div class="hidden p-space-sm rounded bg-[#ECFDF5] text-[#065F46] font-label-sm text-label-sm flex items-center gap-1.5 transition-all" id="noticeSuccessToast">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+            DMCA template copied to clipboard! Ready to send to domain registrar.
+          </div>
+</div>
+<!-- Weekly SerpApi Crawl Schedule Card -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-[16px] font-semibold text-on-surface">Auto-Crawl Schedule</h3>
+<span class="inline-flex items-center gap-1 text-on-tertiary-container font-label-sm text-label-sm font-semibold">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>
+              Active
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            FakeCheck.ai autonomously queries the SerpApi Google Lens engine every Monday at 04:00 UTC across 40+ regional e-commerce indices.
+          </p>
+<div class="flex flex-col gap-2 pt-2">
+<div class="flex items-center justify-between py-1.5 px-space-sm rounded bg-surface-container-low text-label-sm">
+<span class="text-on-surface font-medium">Next Sweep Scheduled:</span>
+<span class="text-secondary font-bold">In 3 Days (Monday)</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-space-sm rounded bg-surface-container-low text-label-sm">
+<span class="text-on-surface font-medium">SerpApi Quota Remaining:</span>
+<span class="text-on-surface-variant font-data-mono">8,420 / 10,000 reqs</span>
+</div>
+</div>
+</div>
+<!-- Safe Commerce Tips for Creators -->
+<div class="p-space-md rounded-xl bg-surface-container-high/60 flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px] shrink-0 mt-0.5">lightbulb</span>
+<div class="flex flex-col gap-0.5">
+<span class="font-headline-sm text-[14px] font-bold text-on-surface">Creator Watermarking Tip</span>
+<p class="font-body-sm text-[12px] text-on-surface-variant leading-relaxed">
+              SerpApi Lens indexes sub-pixel micro-crops. Place invisible EXIF copyright tags &amp; delicate low-opacity corner glyphs to make proof attribution 100% indisputable.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline Script for Filtering & Interactive Takedown Drawer -->
+<script>
+    // Tab switching micro-interactions
+    document.querySelectorAll('#filterTabs .filter-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('#filterTabs .filter-tab').forEach(t => {
+          t.classList.remove('bg-surface-container-high', 'text-on-surface');
+          t.classList.add('text-on-surface-variant');
+        });
+        this.classList.remove('text-on-surface-variant');
+        this.classList.add('bg-surface-container-high', 'text-on-surface');
+
+        const filter = this.getAttribute('data-filter');
+        const rows = document.querySelectorAll('.scan-row');
+        rows.forEach(row => {
+          if (filter === 'all') {
+            row.style.display = '';
+          } else if (filter === 'creator') {
+            row.style.display = row.getAttribute('data-type') === 'creator' ? '' : 'none';
+          } else if (filter === 'buyer') {
+            row.style.display = row.getAttribute('data-type') === 'buyer' ? '' : 'none';
+          } else if (filter === 'action') {
+            const status = row.getAttribute('data-status');
+            row.style.display = (status === 'amber' || status === 'high-risk') ? '' : 'none';
+          }
+        });
+      });
+    });
+
+    // Real-time table search
+    const searchInput = document.getElementById('scanSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase();
+        document.querySelectorAll('.scan-row').forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(query) ? '' : 'none';
+        });
+      });
+    }
+
+    // Populate DMCA Generator from row action
+    function triggerNoticeDraft(productTitle, rogueUrl, scamPrice, scanDate) {
+      document.getElementById('dmcaItemName').value = productTitle;
+      document.getElementById('dmcaTargetUrl').value = rogueUrl;
+      const section = document.getElementById('takedown-section');
+      section.scrollIntoView({ behavior: 'smooth' });
+      section.classList.add('animate-pulse');
+      setTimeout(() => section.classList.remove('animate-pulse'), 1200);
+    }
+
+    // Copy DMCA template
+    function copyGeneratedNotice() {
+      const item = document.getElementById('dmcaItemName').value;
+      const url = document.getElementById('dmcaTargetUrl').value;
+      const noticeText = `FORMAL DMCA COPYRIGHT INFRINGEMENT NOTICE\n\nTo Whom It May Concern / Hosting Provider Abuse Team,\n\nI am the authorized copyright holder of the proprietary product design and photography for "${item}".\n\nInfringing Material Location:\n${url}\n\nEvidence of Prior Publication & Reverse Image Match:\nIndexed via FakeCheck.ai SerpApi Google Lens Verification (Hash Cluster #SHA-256_883a91).\n\nI have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law.\n\nPlease immediately disable or remove access to the infringing material.\n\nSigned,\nArtisan Studios IP Enforcement`;
+
+      navigator.clipboard.writeText(noticeText).then(() => {
+        const btnText = document.getElementById('copyBtnText');
+        const original = btnText.innerText;
+        btnText.innerText = "Notice Copied!";
+        const toast = document.getElementById('noticeSuccessToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          btnText.innerText = original;
+          toast.classList.add('hidden');
+        }, 3500);
+      });
+    }
+
+    function dispatchHostNotice() {
+      alert("FakeCheck.ai Dispatcher: Notice securely dispatched to host abuse endpoint (Cloudflare Registrar & Hostinger Abuse Desk). Ticket #FC-9942 created.");
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_6px_rgba(0,0,0,0.03)]"><div class="max-w-[1200px] mx-auto px-gutter py-space-xl flex flex-col gap-space-lg"><div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md"><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface">FakeCheck<span class="text-secondary">.ai</span></span><span class="px-space-sm py-space-xs rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">SerpApi India Hackathon 2026</span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-xl">Product authenticity &amp; reverse image intelligence utility powered by the SerpApi Google Lens Engine. Identifying cross-marketplace visual duplicates, spoofed storefronts, and deep-discount fraud.</p></div><div class="flex items-center gap-space-md"><a class="inline-flex items-center gap-space-xs px-space-md py-space-sm rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm hover:bg-surface-container transition-colors" data-path="system-ops-health" href="#"><span class="material-symbols-outlined text-[16px] text-on-tertiary-container">check_circle</span>Engine Status: 99.98%</a></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm"><p class="font-body-sm text-body-sm text-on-surface-variant">FakeCheck.ai provides objective visual risk signals and metadata matching, not definitive legal claims. Verify with verified sellers and brand owners.</p><div class="flex items-center gap-space-lg shrink-0"><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">Documentation</a><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="system-ops-health" href="#">API Metrics</a><span class="font-body-sm text-body-sm text-on-surface-variant">© 2026 FakeCheck.ai</span></div></div></div></footer></body></html>

@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite*
+uploads/
+.pytest_cache/
+.uv-cache/
+**/__pycache__/
+**/*.pyc
+fake-check-ai-development/node_modules/
+fake-check-ai-development/.next/
+fake-check-ai-development/out/
+fake-check-ai-development/tsconfig.tsbuildinfo

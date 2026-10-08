@@ -1,0 +1,49 @@
+# Render Blueprint for Verix — SerpApi India Hackathon 2026
+# Deploy target: Render Web Service + PostgreSQL Managed Database
+
+services:
+  - type: web
+    name: verix-authenticity-engine
+    env: docker
+    region: singapore # Closest region for Indian commerce latency
+    plan: starter
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: ENABLE_MOCK_FALLBACK
+        value: "false"
+      - key: ENABLE_MULTI_ENGINE
+        value: "true"
+      - key: ENABLE_LLM_EVALUATION
+        value: "false"
+      - key: SERPAPI_COUNTRY
+        value: "in"
+      - key: SERPAPI_LANGUAGE
+        value: "en"
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: MEDIA_SIGNING_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: verix-postgres
+          property: connectionString
+      - key: SERPAPI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: RATE_LIMIT_PER_MINUTE
+        value: "60"
+
+databases:
+  - name: verix-postgres
+    plan: free
+    region: singapore
