@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  verix-db:
+    image: postgres:16-alpine
+    container_name: verix-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: verix_user
+      POSTGRES_PASSWORD: verix_password
+      POSTGRES_DB: verix
+    volumes:
+      - verix_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U verix_user -d verix"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  verix-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: verix-engine
+    restart: unless-stopped
+    depends_on:
+      verix-db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      ENVIRONMENT: production
+      PORT: 8000
+      DATABASE_URL: postgresql+asyncpg://verix_user:verix_password@verix-db:5432/verix
+      SERPAPI_API_KEY: ${SERPAPI_API_KEY:-}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:-verix-admin-key-selfhost-2026}
+      MEDIA_SIGNING_KEY: ${MEDIA_SIGNING_KEY:-verix-media-signing-selfhost-2026}
+      ALLOWED_ORIGINS: '["*"]'
+      ENABLE_MULTI_ENGINE: "true"
+      ENABLE_LLM_EVALUATION: "false"
+      SERPAPI_COUNTRY: "in"
+      SERPAPI_LANGUAGE: "en"
+      RATE_LIMIT_PER_MINUTE: "60"
+    volumes:
+      - verix_uploads:/app/uploads
+
+volumes:
+  verix_pgdata:
+  verix_uploads:

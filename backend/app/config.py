@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     
     # External APIs
     SERPAPI_API_KEY: Optional[str] = None
+    SERPAPI_API_KEYS: Optional[str] = None
     # Multi-engine evidence is the default product behavior. Deployments can
     # lower SERPAPI_MAX_SECONDARY_CALLS when credit or latency budgets require it.
     ENABLE_MULTI_ENGINE: bool = True
@@ -31,8 +32,10 @@ class Settings(BaseSettings):
     SERPAPI_COUNTRY: str = "in"
     SERPAPI_LANGUAGE: str = "en"
     GROQ_API_KEY: Optional[str] = None
+    GROQ_API_KEYS: Optional[str] = None
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
     GEMINI_API_KEY: Optional[str] = None
+    GEMINI_API_KEYS: Optional[str] = None
     GEMINI_MODEL: str = "gemini-3.7-flash"
     ENABLE_SYNTHID_DETECTOR: bool = True
     GCP_PROJECT_ID: Optional[str] = None

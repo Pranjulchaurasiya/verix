@@ -1,9 +1,9 @@
 FROM node:24-alpine AS frontend-build
 
 WORKDIR /web
-COPY fake-check-ai-development/package.json fake-check-ai-development/pnpm-lock.yaml fake-check-ai-development/pnpm-workspace.yaml ./
+COPY frontend/package.json frontend/pnpm-lock.yaml frontend/pnpm-workspace.yaml ./
 RUN npm install --global pnpm@12.3.4 && pnpm install --frozen-lockfile
-COPY fake-check-ai-development/ ./
+COPY frontend/ ./
 RUN pnpm build
 
 FROM python:3.11-slim
@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Copy backend and built static frontend
 COPY backend /app/backend
-COPY --from=frontend-build /web/out /app/fake-check-ai-development/out
+COPY --from=frontend-build /web/out /app/frontend/out
 
 # Create directory for local uploads
 RUN mkdir -p /app/uploads

@@ -14,7 +14,7 @@ help:
 
 install:
 	python -m pip install -r backend/requirements.txt
-	cd fake-check-ai-development && pnpm install
+	cd frontend && pnpm install
 
 test:
 	python -m pytest backend/tests -v
@@ -23,18 +23,18 @@ benchmark:
 	python evaluate_ground_truth.py
 
 typecheck:
-	cd fake-check-ai-development && pnpm exec tsc --noEmit
+	cd frontend && pnpm exec tsc --noEmit
 	python -m compileall backend
 
 build:
-	cd fake-check-ai-development && pnpm build
+	cd frontend && pnpm build
 
 dev-backend:
 	python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
 
 dev-frontend:
-	cd fake-check-ai-development && pnpm dev
+	cd frontend && pnpm dev
 
 clean:
-	python -c "import shutil, os; [shutil.rmtree(p) for p in ['.pytest_cache', '.uv-cache', '.deepeval', 'fake-check-ai-development/.next', 'fake-check-ai-development/out'] if os.path.exists(p)]"
+	python -c "import shutil, os; [shutil.rmtree(p) for p in ['.pytest_cache', '.uv-cache', '.deepeval', 'frontend/.next', 'frontend/out'] if os.path.exists(p)]"
 	python -c "import os, glob; [os.remove(f) for f in glob.glob('**/*.pyc', recursive=True)]"

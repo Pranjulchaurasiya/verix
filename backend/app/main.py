@@ -86,9 +86,8 @@ app.include_router(audit_router, prefix="/api/v1")
 app.include_router(enforce_router, prefix="/api/v1")
 app.include_router(webhooks_router, prefix="/api/v1")
 
-# Mount the built Next.js frontend. The legacy vanilla frontend was replaced
-# by fake-check-ai-development and is intentionally no longer served.
-frontend_dir = os.path.join(os.getcwd(), "fake-check-ai-development", "out")
+# Mount the built Next.js frontend if present.
+frontend_dir = os.path.join(os.getcwd(), "frontend", "out")
 if os.path.exists(frontend_dir):
     app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="frontend")
 else:

@@ -70,11 +70,11 @@ venv.bak/
 # --- Node.js & Next.js Artifacts ---
 node_modules/
 **/node_modules/
-fake-check-ai-development/node_modules/
-fake-check-ai-development/.next/
-fake-check-ai-development/out/
-fake-check-ai-development/tsconfig.tsbuildinfo
-fake-check-ai-development/.turbo/
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/tsconfig.tsbuildinfo
+frontend/.turbo/
 .next/
 out/
 .turbo/
@@ -112,4 +112,14 @@ Thumbs.db
 # --- AI & Agent Scratch Artifacts ---
 scratch/
 .gemini/
-graphify-out/cache/
+graphify-out/
+
+# --- Video & Video Editing Artifacts ---
+video/
+demo-video/
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+

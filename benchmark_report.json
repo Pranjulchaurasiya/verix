@@ -1,58 +1,58 @@
 {
-  "benchmark_timestamp": "2026-10-08T15:00:27.754897+00:00",
+  "benchmark_timestamp": "2026-10-08T23:46:57.478636+00:00",
   "total_tests": 7,
   "passed_tests": 7,
   "pass_rate_pct": 100.0,
-  "mean_latency_ms": 42.81,
+  "mean_latency_ms": 10.86,
   "invariants_violated": 0,
   "test_results": [
     {
       "id": "TC-01-WHITELIST",
       "name": "Platform Whitelist Precision & Registry Integrity",
       "passed": true,
-      "latency_ms": 0.31,
+      "latency_ms": 0.1,
       "details": "Tested 3 trusted and 2 untrusted domains."
     },
     {
       "id": "TC-02-PRICING-ANOMALY",
       "name": "Multi-Retailer Pricing Dispersion & Bait-and-Switch Counterfeit Detection",
       "passed": true,
-      "latency_ms": 0.89,
+      "latency_ms": 0.19,
       "details": "Median: $120.0 USD, Outliers Detected: 1"
     },
     {
       "id": "TC-03-AI-PROVENANCE",
       "name": "Synthetic AI Generator Signatures & C2PA Provenance Detection",
       "passed": true,
-      "latency_ms": 269.21,
+      "latency_ms": 58.73,
       "details": "Detected generators: ['ComfyUI', 'Midjourney'], C2PA: True"
     },
     {
       "id": "TC-04-CRYPTO-MERKLE",
       "name": "RFC 8032 Ed25519 Signing & Merkle Inclusion Proof Integrity",
       "passed": true,
-      "latency_ms": 4.19,
+      "latency_ms": 0.57,
       "details": "Root: d0d78e4044eeef60..., Sig Valid: True, Proofs Valid: True"
     },
     {
       "id": "TC-05-CLI-VERIFIER",
       "name": "Third-Party Offline CLI Evidence Verification",
       "passed": true,
-      "latency_ms": 23.66,
+      "latency_ms": 16.16,
       "details": "CLI Verification Pass: True, Leaves Verified: 4"
     },
     {
       "id": "TC-06-SELLER-TAKEDOWN",
       "name": "Seller Asset Protection & Statutory DMCA/VeRO Notice Compilation",
       "passed": true,
-      "latency_ms": 0.46,
+      "latency_ms": 0.21,
       "details": "Notice Case ID: VERIX-BENCH-SC, Infringing Count: 1"
     },
     {
       "id": "TC-07-WEBHOOKS",
       "name": "Enterprise Webhook HMAC-SHA256 Signatures & Replay Prevention",
       "passed": true,
-      "latency_ms": 0.95,
+      "latency_ms": 0.07,
       "details": "Signature Valid: True, Tamper Rejected: True, Replay Prevented: True"
     }
   ]

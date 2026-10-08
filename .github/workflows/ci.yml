@@ -60,16 +60,16 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
-          cache-dependency-path: fake-check-ai-development/pnpm-lock.yaml
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install Frontend Dependencies
-        working-directory: fake-check-ai-development
+        working-directory: frontend
         run: pnpm install --frozen-lockfile
 
       - name: TypeScript Type Checking
-        working-directory: fake-check-ai-development
+        working-directory: frontend
         run: pnpm exec tsc --noEmit
 
       - name: Next.js Production Static Build
-        working-directory: fake-check-ai-development
+        working-directory: frontend
         run: pnpm build

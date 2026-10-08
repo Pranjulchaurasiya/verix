@@ -23,7 +23,7 @@ cd verix
 python -m pip install -r backend/requirements.txt
 
 # 3. Install frontend dependencies
-cd fake-check-ai-development
+cd frontend
 pnpm install
 cd ..
 
@@ -42,7 +42,7 @@ python -m pytest backend/tests -v
 python evaluate_ground_truth.py
 
 # Frontend TypeScript type checking
-cd fake-check-ai-development
+cd frontend
 pnpm exec tsc --noEmit
 pnpm build
 cd ..

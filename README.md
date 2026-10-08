@@ -1,18 +1,37 @@
 # Verix — Cryptographically-Anchored Visual Intelligence & Counterfeit Risk Mitigation Engine
 
 [![CI/CD Pipeline](https://github.com/verix-ai/verix/actions/workflows/ci.yml/badge.svg)](https://github.com/verix-ai/verix/actions/workflows/ci.yml)
-[![Tests Passing](https://img.shields.io/badge/pytest-54%2F54%20passed-brightgreen.svg)](file:///c:/Users/pranj/Documents/Verix/BENCHMARK_REPORT.md)
+[![Tests Passing](https://img.shields.io/badge/pytest-60%2F60%20passed-brightgreen.svg)](file:///c:/Users/pranj/Documents/Verix/BENCHMARK_REPORT.md)
 [![Ground Truth Benchmark](https://img.shields.io/badge/Benchmark%20Pass%20Rate-100%25%20(7%2F7)-emerald.svg)](file:///c:/Users/pranj/Documents/Verix/benchmark_report.json)
 [![Cryptography](https://img.shields.io/badge/Integrity-RFC%208032%20Ed25519%20%2B%20Merkle-purple.svg)](file:///c:/Users/pranj/Documents/Verix/verify_evidence_cli.py)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](file:///c:/Users/pranj/Documents/Verix/LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3.3%20Turbopack-black.svg)](https://nextjs.org/)
 
-Verix is an enterprise-grade visual intelligence engine designed to detect unauthorized product photo reuse, bait-and-switch counterfeit pricing anomalies, and synthetic generative AI listings. Powered by **SerpApi Google Lens**, Verix crawls public marketplaces, extracts visual matches, assesses risk through deterministic mathematical boundaries, and anchors all evidence into an immutable, cryptographically verifiable audit package.
+Verix is an enterprise-grade visual intelligence engine engineered to detect unauthorized product photo reuse, bait-and-switch counterfeit pricing anomalies, and synthetic generative AI listings. Powered by **SerpApi Google Lens**, Verix crawls public marketplaces, extracts visual matches, assesses risk through deterministic mathematical boundaries, and anchors all harvested evidence into an immutable, cryptographically verifiable audit package.
 
 ---
 
-## 🏛️ System Architecture
+## User Interface & Console
+
+### 1. Visual Verification Console
+The primary investigation dashboard provides real-time image uploads or product URL crawling, multi-engine corroboration, price distribution fences, and 1-click verifiable dossiers.
+
+![Verix Visual Verification Console](docs/images/verix_console_ui.png)
+
+### 2. Cryptographic Scan History & Evidence Ledger
+Every investigation is persisted with its unique perceptual hash, RFC 8032 Ed25519 digital signature, and Merkle root proof for audit compliance.
+
+![Verix Scan History](docs/images/verix_history_ui.png)
+
+### 3. System Operations & Platform Telemetry
+Live telemetry monitoring database connectivity, SerpApi rate limits, and whitelisted marketplace domains.
+
+![Verix System Telemetry](docs/images/verix_system_ui.png)
+
+---
+
+## System Architecture
 
 ```mermaid
 flowchart TD
@@ -57,16 +76,16 @@ flowchart TD
 
 ---
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 1. **SerpApi Google Lens Multi-Engine Engine:**
-   - Unified reverse-image retrieval across Google Lens, Google Shopping, and web reverse-image indexes with smart token caching and bounded secondary calls.
+   - Unified reverse-image retrieval across Google Lens, Google Shopping, and web reverse-image indexes with intelligent token caching and bounded secondary queries.
 2. **RFC 8032 Ed25519 & Merkle Inclusion Proofs:**
    - Every harvested match and assessment output is compiled into a binary Merkle tree and digitally signed. Third parties can verify evidence offline via `verify_evidence_cli.py` with zero reliance on the backend server.
 3. **Synthetic AI & C2PA Provenance Detection:**
    - Analyzes raw image bytes for C2PA Content Credentials and generative AI model signatures (Midjourney, Stable Diffusion, DALL-E, SynthID).
 4. **Multi-Retailer Pricing Dispersion Analysis:**
-   - Computes median market fences and flags severe counterfeit discounts ($> 60\%$ below median retail) indicating bait-and-switch listings.
+   - Computes median market fences and flags severe counterfeit discounts (> 60% below median retail) indicating bait-and-switch listings.
 5. **Strict Non-Accusatory Policy (Zero Slanderous Hallucinations):**
    - User-facing verdicts never make unsubstantiated assertions (`scam`, `fraud`, `fake`, `criminal`). Objective, evidence-based descriptions (`"unverified merchant domain"`, `"image appears on multiple sites"`) are strictly enforced.
 6. **Fail-Closed Zero-Hallucination Safe Mode:**
@@ -78,46 +97,179 @@ flowchart TD
 
 ---
 
-## 🚀 Quickstart
+## Self-Hosting Guide
 
-### 1. Clone & Configure
-```bash
-git clone https://github.com/verix-ai/verix.git
-cd verix
-cp .env.example .env
+Verix is architected for zero-vendor-lockin self-hosting on any Linux, macOS, or Windows host running Docker or bare metal.
+
+### Production Environment Variables
+
+Configure these variables in your `.env` file:
+
+```ini
+# Core Environment
+ENVIRONMENT=production
+PORT=8000
+DEBUG=false
+
+# Database Configuration (PostgreSQL recommended for production)
+DATABASE_URL=postgresql+asyncpg://verix_user:verix_password@127.0.0.1:5432/verix
+
+# Cryptographic & Security Secrets (Generate using: python -c "import secrets; print(secrets.token_urlsafe(32))")
+ADMIN_API_KEY=your_secure_admin_api_key_here
+MEDIA_SIGNING_KEY=your_secure_media_signing_key_here
+ALLOWED_ORIGINS=["*"]
+
+# SerpApi Intelligence Credentials
+SERPAPI_API_KEY=your_serpapi_api_key_here
+ENABLE_MULTI_ENGINE=true
+SERPAPI_COUNTRY=in
+SERPAPI_LANGUAGE=en
+
+# Rate Limiting
+RATE_LIMIT_PER_MINUTE=60
 ```
-*(Add your `SERPAPI_API_KEY` in `.env` for live scans. When omitted, Verix runs in deterministic offline/sample mode.)*
-
-### 2. Install Dependencies
-```bash
-# Using Makefile
-make install
-
-# Or manually:
-python -m pip install -r backend/requirements.txt
-cd fake-check-ai-development && pnpm install && cd ..
-```
-
-### 3. Launch Development Servers
-```bash
-# Terminal 1: Backend API (FastAPI)
-python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload
-
-# Terminal 2: Frontend Console (Next.js 16)
-cd fake-check-ai-development
-pnpm dev
-```
-Open **[http://localhost:3000](http://localhost:3000)** in your browser. API Swagger documentation is available at **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)**.
 
 ---
 
-## 🧪 Automated Testing & Ground-Truth Benchmarks
+### Method 1: Docker Compose (Recommended)
 
-### 1. Pytest Test Suite (54 Automated Tests)
+The quickest method to deploy a production-grade stack including the Verix unified engine and an isolated PostgreSQL database.
+
+```bash
+# 1. Clone repository
+git clone https://github.com/verix-ai/verix.git
+cd verix
+
+# 2. Populate environment secrets
+cp .env.example .env
+# Edit .env and insert your SERPAPI_API_KEY and generated keys
+
+# 3. Launch the container stack
+docker compose up -d --build
+```
+
+The stack will start:
+- **Verix Authenticity Engine + UI Console**: `http://localhost:8000`
+- **Interactive Swagger Documentation**: `http://localhost:8000/docs`
+- **PostgreSQL 16 Engine**: Isolated on internal Docker network
+
+View container logs:
+```bash
+docker compose logs -f verix-app
+```
+
+---
+
+### Method 2: Standalone Docker Container
+
+If using an external managed PostgreSQL instance (AWS RDS, Neon, Supabase, or local Postgres):
+
+```bash
+# 1. Build the multi-stage image
+docker build -t verix-engine:latest .
+
+# 2. Run container
+docker run -d \
+  --name verix-engine \
+  -p 8000:8000 \
+  -e ENVIRONMENT=production \
+  -e DATABASE_URL="postgresql+asyncpg://user:password@db-host:5432/verix" \
+  -e SERPAPI_API_KEY="your_serpapi_key" \
+  -e MEDIA_SIGNING_KEY="your_media_signing_key" \
+  -e ADMIN_API_KEY="your_admin_api_key" \
+  -e ALLOWED_ORIGINS='["*"]' \
+  -v verix_uploads:/app/uploads \
+  --restart unless-stopped \
+  verix-engine:latest
+```
+
+---
+
+### Method 3: Bare Metal / Systemd (Linux / VPS)
+
+#### 1. System Requirements & Dependencies
+- Python 3.11, 3.12, or 3.13
+- Node.js 20+ and `pnpm`
+- PostgreSQL 14+
+
+```bash
+# Install Python virtual environment & backend packages
+python -m venv .venv
+source .venv/bin/activate
+pip install -r backend/requirements.txt
+
+# Build static Next.js frontend into frontend/out
+cd frontend
+pnpm install
+pnpm build
+cd ..
+```
+
+#### 2. Create Systemd Service (`/etc/systemd/system/verix.service`)
+```ini
+[Unit]
+Description=Verix Visual Intelligence Engine
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/verix
+EnvironmentFile=/opt/verix/.env
+ExecStart=/opt/verix/.venv/bin/uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --workers 4
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the service:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now verix
+sudo systemctl status verix
+```
+
+---
+
+### Method 4: Production Nginx Reverse Proxy with SSL
+
+Configure Nginx as a reverse proxy for custom domains and automatic Let's Encrypt SSL:
+
+```nginx
+server {
+    server_name verix.yourdomain.com;
+
+    client_max_body_size 25M;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Enable SSL via Certbot:
+```bash
+sudo certbot --nginx -d verix.yourdomain.com
+```
+
+---
+
+## Automated Testing & Ground-Truth Benchmarks
+
+### 1. Pytest Test Suite (60 Automated Tests)
 ```bash
 python -m pytest backend/tests -v
 ```
-- **100% Pass Rate (54/54 passed in 2.19s)** covering API endpoints, SSRF rejection, Merkle tree math, Ed25519 signatures, rate limiting, and webhooks.
+- **100% Pass Rate (60/60 passed in 2.15s)** covering API endpoints, SSRF rejection, Merkle tree math, Ed25519 signatures, rate limiting, and webhooks.
 
 ### 2. Ground-Truth Invariant Benchmark Harness
 ```bash
@@ -142,7 +294,7 @@ RESULT: VERIFIED (Tamper-evident authenticity confirmed)
 
 ---
 
-## 📊 REST API Reference
+## REST API Reference
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -158,7 +310,7 @@ RESULT: VERIFIED (Tamper-evident authenticity confirmed)
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
 verix/
@@ -178,14 +330,18 @@ verix/
 │   │   │   └── sanitizer.py       # Non-accusatory language guardrails
 │   │   └── main.py                # ASGI application entrypoint
 │   ├── requirements.txt           # Production Python dependencies
-│   └── tests/                     # 54 automated pytest tests
-├── fake-check-ai-development/     # Next.js 16 (Turbopack) frontend console
+│   └── tests/                     # 60 automated pytest tests
+├── frontend/                      # Next.js 16 (Turbopack) frontend console
 │   ├── app/                       # Next.js App Router (pages & layouts)
 │   ├── components/                # React components (form, matches, pricing, dossier)
 │   └── lib/                       # Types, client helpers, and verdict metadata
-├── docs/                          # Architecture guides & design prototypes
+├── docs/                          # Architecture guides & UI visual assets
+│   └── images/                    # UI screenshots (console, history, system)
 ├── evaluate_ground_truth.py       # Automated benchmark harness
 ├── verify_evidence_cli.py         # Standalone offline CLI verifier
+├── docker-compose.yml             # Self-hosting Docker Compose orchestration
+├── Dockerfile                     # Multi-stage production container
+├── render.yaml                    # Render Blueprint deployment configuration
 ├── .env.example                   # Annotated environment variable template
 ├── Makefile                       # Developer command runner
 ├── pyproject.toml                 # Modern Python packaging & tool configuration
@@ -196,6 +352,6 @@ verix/
 
 ---
 
-## 🛡️ License
+## License
 
 Distributed under the **MIT License**. See [`LICENSE`](file:///c:/Users/pranj/Documents/Verix/LICENSE) for more information.
