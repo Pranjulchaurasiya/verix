@@ -59,9 +59,11 @@ class ScanResponse(BaseModel):
     ai_overview: Optional[str] = None
     typical_price_range: Optional[str] = None
     is_synthetic: Optional[bool] = False
+    synthid_detected: Optional[bool] = False
     provenance_summary: Optional[str] = None
     detected_generators: List[str] = []
     pricing_analysis: Optional[dict] = None
+    provenance_details: Optional[dict] = None
 
 class ScanListItem(BaseModel):
     id: str

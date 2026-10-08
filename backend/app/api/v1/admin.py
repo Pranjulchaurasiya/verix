@@ -50,6 +50,8 @@ async def get_system_health(db: AsyncSession = Depends(get_db), _: None = Depend
         serpapi_configured=bool(settings.SERPAPI_API_KEY),
         groq_configured=bool(settings.GROQ_API_KEY),
         gemini_configured=bool(settings.GEMINI_API_KEY),
+        synthid_configured=bool(settings.ENABLE_SYNTHID_DETECTOR),
+        gcp_vertex_configured=bool(settings.GCP_PROJECT_ID),
         llm_eval_enabled=bool(settings.ENABLE_LLM_EVALUATION),
         serpapi_operational=serpapi_operational,
         fail_closed_mode_active=fail_closed_active,

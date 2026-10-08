@@ -34,6 +34,9 @@ class Settings(BaseSettings):
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
     GEMINI_API_KEY: Optional[str] = None
     GEMINI_MODEL: str = "gemini-3.7-flash"
+    ENABLE_SYNTHID_DETECTOR: bool = True
+    GCP_PROJECT_ID: Optional[str] = None
+    GCP_LOCATION: str = "us-central1"
     # Experimental: generated verdicts can assert facts not established by search.
     # Keep deterministic, source-limited assessment as the public default.
     ENABLE_LLM_EVALUATION: bool = False

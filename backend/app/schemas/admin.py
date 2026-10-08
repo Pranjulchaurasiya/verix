@@ -11,6 +11,8 @@ class AdminHealthResponse(BaseModel):
     serpapi_configured: bool
     groq_configured: bool
     gemini_configured: bool = False
+    synthid_configured: bool = True
+    gcp_vertex_configured: bool = False
     llm_eval_enabled: bool = False
     serpapi_operational: bool
     fail_closed_mode_active: bool

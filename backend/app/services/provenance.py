@@ -127,9 +127,12 @@ def analyze_image_provenance(image_bytes: Optional[bytes]) -> Dict[str, Any]:
     else:
         summary_parts.append("Standard digital image without synthetic AI generation markers.")
 
+    synthid_found = any("synthid" in g.lower() or "imagen" in g.lower() for g in generators_list)
+
     return {
         "has_provenance_data": bool(has_exif or software_tag or c2pa_found or is_synthetic),
         "is_synthetic": is_synthetic,
+        "synthid_detected": synthid_found,
         "detected_generators": generators_list,
         "c2pa_present": c2pa_found,
         "software_tag": software_tag,
@@ -137,3 +140,8 @@ def analyze_image_provenance(image_bytes: Optional[bytes]) -> Dict[str, Any]:
         "summary": " ".join(summary_parts),
         "metadata_snippets": raw_snippets[:3]
     }
+
+async def analyze_image_provenance_async(image_bytes: Optional[bytes]) -> Dict[str, Any]:
+    """Unified multi-tier asynchronous provenance inspection with Gemini Vision & SynthID."""
+    from backend.app.services.synthid import synthid_service
+    return await synthid_service.analyze_provenance(image_bytes)

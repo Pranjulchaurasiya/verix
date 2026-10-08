@@ -23,7 +23,7 @@ from backend.app.services.storage import save_uploaded_image, compute_image_hash
 from backend.app.services.serpapi import search_google_lens, enrich_with_secondary_engines, canonicalize_evidence_url, SerpApiDegradedException
 from backend.app.services.groq_agent import evaluate_authenticity_with_groq
 from backend.app.services.availability import append_availability_guidance
-from backend.app.services.provenance import analyze_image_provenance
+from backend.app.services.provenance import analyze_image_provenance, analyze_image_provenance_async
 from backend.app.services.pricing import analyze_price_distribution
 from backend.app.services.webhooks import dispatch_webhook_event
 from backend.app.services.rate_limiter import check_rate_limit
@@ -145,9 +145,9 @@ async def analyze_product(
         )
 
     # -------------------------------------------------------------
-    # IMAGE PROVENANCE & SYNTHETIC AI GENERATOR DETECTION
+    # IMAGE PROVENANCE & SYNTHETIC AI GENERATOR DETECTION (SYNTHID TIER 1-3)
     # -------------------------------------------------------------
-    provenance_info = analyze_image_provenance(image_bytes)
+    provenance_info = await analyze_image_provenance_async(image_bytes)
 
     # -------------------------------------------------------------
     # REVERSE IMAGE SEARCH VIA SERPAPI (WITH FAIL-CLOSED CIRCUIT BREAKER)
@@ -318,9 +318,11 @@ async def analyze_product(
             ai_overview=detected_ai_overview,
             typical_price_range=detected_typical_price_range,
             is_synthetic=provenance_info.get("is_synthetic", False),
+            synthid_detected=provenance_info.get("synthid_detected", False),
             provenance_summary=provenance_info.get("summary"),
             detected_generators=provenance_info.get("detected_generators", []),
-            pricing_analysis=pricing_stats
+            pricing_analysis=pricing_stats,
+            provenance_details=provenance_info
         )
 
     # -------------------------------------------------------------
@@ -379,6 +381,13 @@ async def analyze_product(
             "summary": "Synthetic AI generator markers detected in image metadata."
         }))
     
+    if provenance_info.get("synthid_detected"):
+        asyncio.create_task(dispatch_webhook_event("verix.event.synthid_detected", {
+            "scan_id": scan_rec.id,
+            "tier": provenance_info.get("active_tier", "tier1_metadata"),
+            "summary": "Google DeepMind SynthID watermark confirmed."
+        }))
+    
     detected_ai_overview = next((m.get("ai_overview") for m in verdict["matched_domains"] if m.get("ai_overview")), None)
     detected_typical_price_range = next((m.get("typical_price_range") for m in verdict["matched_domains"] if m.get("typical_price_range")), None)
     return ScanResponse(
@@ -404,9 +413,11 @@ async def analyze_product(
         ai_overview=detected_ai_overview,
         typical_price_range=detected_typical_price_range,
         is_synthetic=provenance_info.get("is_synthetic", False),
+        synthid_detected=provenance_info.get("synthid_detected", False),
         provenance_summary=provenance_info.get("summary"),
         detected_generators=provenance_info.get("detected_generators", []),
-        pricing_analysis=pricing_stats
+        pricing_analysis=pricing_stats,
+        provenance_details=provenance_info
     )
 
 

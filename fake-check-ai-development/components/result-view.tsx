@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Info, Clock, ArrowLeft, Copy, RotateCcw, Download, ShieldAlert, FileText } from "lucide-react"
+import { Check, Info, Clock, ArrowLeft, Copy, RotateCcw, Download, ShieldAlert, FileText, Sparkles, Fingerprint } from "lucide-react"
 import type { CheckResult } from "@/lib/types"
 import { VERDICT_META, toneClasses, formatTime } from "@/lib/verdict-meta"
 import { TrustScoreRing } from "@/components/trust-score-ring"
@@ -98,19 +98,52 @@ export function ResultView({ result, onReset }: { result: CheckResult; onReset?:
               <span className="font-semibold text-primary">Google Lens AI Overview:</span> {result.aiOverview}
             </div>
           )}
-          {result.isSynthetic && (
-            <div className="mt-3 flex items-start gap-2.5 rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 text-xs text-foreground/90">
-              <span className="shrink-0 rounded bg-amber-500/20 px-1.5 py-0.5 font-semibold text-amber-600 dark:text-amber-400">
-                AI SYNTHETIC MARKER
-              </span>
-              <div>
-                <p className="font-medium text-foreground">
-                  {result.provenanceSummary || "Synthetic generator metadata detected in image bytes."}
+          {(result.isSynthetic || result.synthidDetected) && (
+            <div className={cn(
+              "mt-3 flex items-start gap-2.5 rounded-lg border p-3 text-xs text-foreground/90 transition-all",
+              result.synthidDetected
+                ? "border-indigo-500/40 bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-indigo-500/5 shadow-sm"
+                : "border-amber-500/30 bg-amber-500/10"
+            )}>
+              <div className="shrink-0 mt-0.5">
+                {result.synthidDetected ? (
+                  <Sparkles className="size-4 text-indigo-500 dark:text-cyan-400 animate-pulse" />
+                ) : (
+                  <Fingerprint className="size-4 text-amber-500" />
+                )}
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className={cn(
+                    "rounded px-1.5 py-0.5 font-bold tracking-wide uppercase text-[10px]",
+                    result.synthidDetected
+                      ? "bg-indigo-500/20 text-indigo-700 dark:text-cyan-300 border border-indigo-500/30"
+                      : "bg-amber-500/20 text-amber-600 dark:text-amber-400"
+                  )}>
+                    {result.synthidDetected ? "DEEPMIND SYNTHID CONFIRMED" : "AI SYNTHETIC MEDIA DETECTED"}
+                  </span>
+                  {result.provenanceDetails?.active_tier && (
+                    <span className="text-[10px] text-muted-foreground font-mono">
+                      via {result.provenanceDetails.active_tier === "tier2_gemini_vision" ? "Gemini Vision Forensic Tier" : "Byte & Metadata Tier"}
+                    </span>
+                  )}
+                </div>
+                <p className="font-medium text-foreground mt-1">
+                  {result.provenanceSummary || (result.synthidDetected ? "Google DeepMind SynthID imperceptible watermark confirmed." : "Synthetic generator metadata detected in image bytes.")}
                 </p>
                 {result.detectedGenerators && result.detectedGenerators.length > 0 && (
                   <p className="mt-1 text-muted-foreground">
-                    Signatures: {result.detectedGenerators.join(", ")}
+                    Model Signatures: {result.detectedGenerators.join(", ")}
                   </p>
+                )}
+                {result.provenanceDetails?.visual_artifacts && result.provenanceDetails.visual_artifacts.length > 0 && (
+                  <div className="mt-1.5 flex flex-wrap gap-1">
+                    {result.provenanceDetails.visual_artifacts.map((art: string, idx: number) => (
+                      <span key={idx} className="rounded bg-background/60 px-1.5 py-0.5 text-[10px] text-muted-foreground border border-border/50">
+                        {art}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

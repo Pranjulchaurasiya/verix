@@ -18,15 +18,15 @@
     "semantic_hash": ""
   },
   "backend/app/api/v1/admin.py": {
-    "mtime": 1791413492.8583982,
-    "seen": 1791416125.0840237,
-    "ast_hash": "bc2ba86eb8535ea568ed28c9897ede29",
+    "mtime": 1791471405.0158656,
+    "seen": 1791471684.0774882,
+    "ast_hash": "2c2d0722e21f4d6191fced000f056051",
     "semantic_hash": ""
   },
   "backend/app/api/v1/analyze.py": {
-    "mtime": 1791417783.0582108,
-    "seen": 1791437793.249024,
-    "ast_hash": "f911fec069d3cc1660125bfc337d3e52",
+    "mtime": 1791471360.2759173,
+    "seen": 1791471684.0774903,
+    "ast_hash": "f09a6cc44e13208ccb72bd1b62fdff16",
     "semantic_hash": ""
   },
   "backend/app/api/v1/scans.py": {
@@ -36,9 +36,9 @@
     "semantic_hash": ""
   },
   "backend/app/config.py": {
-    "mtime": 1791452954.3406384,
-    "seen": 1791453081.726672,
-    "ast_hash": "78e39837b9e3e7c91de1f600b28dfb1c",
+    "mtime": 1791471373.6374698,
+    "seen": 1791471684.0774996,
+    "ast_hash": "a395285419802f6f0162510610e12b46",
     "semantic_hash": ""
   },
   "backend/app/database.py": {
@@ -72,15 +72,15 @@
     "semantic_hash": ""
   },
   "backend/app/schemas/admin.py": {
-    "mtime": 1791413482.483358,
-    "seen": 1791416125.0840592,
-    "ast_hash": "0f205d0d6c44c8f1c73d63183b11fdd3",
+    "mtime": 1791471397.0212867,
+    "seen": 1791471684.0775096,
+    "ast_hash": "5dad61b513f73a42ef9daafc651a3009",
     "semantic_hash": ""
   },
   "backend/app/schemas/scan.py": {
-    "mtime": 1791416537.7738163,
-    "seen": 1791416821.189032,
-    "ast_hash": "4581e8d553c92eb732d8f5ef718a7a0b",
+    "mtime": 1791471293.187274,
+    "seen": 1791471684.077511,
+    "ast_hash": "83bdc59f481644802cfe9f9d6434a663",
     "semantic_hash": ""
   },
   "backend/app/services/__init__.py": {
@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "fake-check-ai-development/components/result-view.tsx": {
-    "mtime": 1791437955.0013072,
-    "seen": 1791438130.800599,
-    "ast_hash": "84d9443403bd0c4987908974091ba2f5",
+    "mtime": 1791471534.2493708,
+    "seen": 1791471684.0775962,
+    "ast_hash": "2c6053b8b7173e503db2d69757fbc5a2",
     "semantic_hash": ""
   },
   "fake-check-ai-development/components/site-header.tsx": {
@@ -504,9 +504,9 @@
     "semantic_hash": ""
   },
   "backend/app/services/provenance.py": {
-    "mtime": 1791415306.0436776,
-    "seen": 1791416125.084078,
-    "ast_hash": "ba8f6c4b657ed59aaac392e5455eb019",
+    "mtime": 1791471279.368799,
+    "seen": 1791471684.0775216,
+    "ast_hash": "29b5f528bba276d6f2b69f8092359a1a",
     "semantic_hash": ""
   },
   "backend/app/services/takedown.py": {
@@ -624,9 +624,9 @@
     "semantic_hash": ""
   },
   "benchmark_report.json": {
-    "mtime": 1791454102.793878,
-    "seen": 1791454184.6585412,
-    "ast_hash": "0a3485769fb59f9b3478f3db0670fad7",
+    "mtime": 1791471627.7531786,
+    "seen": 1791471684.0775666,
+    "ast_hash": "3ddec12f8b9afff429f2794258192d4b",
     "semantic_hash": ""
   },
   "evaluate_ground_truth.py": {
@@ -642,9 +642,9 @@
     "semantic_hash": ""
   },
   "BENCHMARK_REPORT.md": {
-    "mtime": 1791454102.794686,
-    "seen": 1791454184.658705,
-    "ast_hash": "301617fe47900ea03b111cfe3897f9b5",
+    "mtime": 1791471627.7571075,
+    "seen": 1791471684.0776498,
+    "ast_hash": "e6a86daf913933a921b0f197e478973c",
     "semantic_hash": ""
   },
   "backend/app/api/v1/webhooks.py": {
@@ -837,6 +837,18 @@
     "mtime": 1790169523.0014038,
     "seen": 1791454184.6588001,
     "ast_hash": "27acc41b53c01a1f5cf0fb24e3db88da",
+    "semantic_hash": ""
+  },
+  "backend/app/services/synthid.py": {
+    "mtime": 1791471259.365584,
+    "seen": 1791471684.0775318,
+    "ast_hash": "58f9187cdbda01f3f56bf10bc4cc97ce",
+    "semantic_hash": ""
+  },
+  "backend/tests/test_synthid.py": {
+    "mtime": 1791471560.3610513,
+    "seen": 1791471684.0775607,
+    "ast_hash": "a788e72b15eea811d8e5271be46990b7",
     "semantic_hash": ""
   }
 }
