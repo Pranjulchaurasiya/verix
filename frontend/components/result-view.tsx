@@ -14,6 +14,7 @@ import { TakedownDialog } from "@/components/takedown-dialog"
 import { PricingDistributionCard } from "@/components/pricing-distribution-card"
 import { DomainReputationCard } from "@/components/domain-reputation-card"
 import { ComparisonVideosCard } from "@/components/comparison-videos-card"
+import { RetailerPriceMatrixCard } from "@/components/retailer-price-matrix-card"
 import { DossierDialog } from "@/components/dossier-dialog"
 import { getApiBaseUrl } from "@/lib/client-scope"
 
@@ -180,6 +181,8 @@ export function ResultView({ result, onReset }: { result: CheckResult; onReset?:
       <MerkleVerifyBadge scanId={result.id} demo={result.demo} />
 
       <PricingDistributionCard pricingAnalysis={result.pricingAnalysis} />
+
+      <RetailerPriceMatrixCard retailerPriceMatrix={result.retailerPriceMatrix} />
 
       <DomainReputationCard domainReputation={result.domainReputation} />
 

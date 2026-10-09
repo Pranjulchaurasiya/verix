@@ -279,6 +279,49 @@ export function analyzeImage(input: AnalyzeInput): CheckResult {
         published_date: "1 month ago"
       }
     ],
+    retailerPriceMatrix: {
+      query: "Authentic Product Benchmark",
+      has_data: true,
+      typical_price_range: "₹1,299 – ₹1,999",
+      retailers: [
+        {
+          store_name: "Amazon India",
+          domain: "amazon.in",
+          price: "₹1,499",
+          extracted_price: 1499,
+          link: "https://www.amazon.in",
+          rating: 4.4,
+          reviews: 1420,
+          delivery: "Prime Free Delivery",
+          is_authorized: true,
+          badge: "Authorized Seller"
+        },
+        {
+          store_name: "Flipkart",
+          domain: "flipkart.com",
+          price: "₹1,399",
+          extracted_price: 1399,
+          link: "https://www.flipkart.com",
+          rating: 4.3,
+          reviews: 980,
+          delivery: "Free Delivery",
+          is_authorized: true,
+          badge: "Assured Distributor"
+        },
+        {
+          store_name: "Croma Electronics",
+          domain: "croma.com",
+          price: "₹1,599",
+          extracted_price: 1599,
+          link: "https://www.croma.com",
+          rating: 4.5,
+          reviews: 310,
+          delivery: "Store Pickup Avail.",
+          is_authorized: true,
+          badge: "Official Retailer"
+        }
+      ]
+    },
   }
 }
 

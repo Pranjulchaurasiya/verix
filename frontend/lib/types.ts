@@ -79,6 +79,7 @@ export interface CheckResult {
   provenanceDetails?: any
   domainReputation?: any
   comparisonVideos?: any[]
+  retailerPriceMatrix?: any
 }
 
 export interface HealthEvent {

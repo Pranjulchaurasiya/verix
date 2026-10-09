@@ -770,3 +770,85 @@ async def search_comparison_videos(query: str) -> List[Dict[str, Any]]:
         return []
 
 
+async def fetch_retailer_price_matrix(query: str, country: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Scrapes authorized store pricing, MSRP typical price range, and retailer inventory
+    across major e-commerce platforms using SerpApi Google Shopping engine.
+    """
+    clean_q = _safe_search_query(query)
+    if not clean_q or len(clean_q) < 4 or not settings.SERPAPI_API_KEY:
+        return {
+            "query": clean_q,
+            "has_data": False,
+            "typical_price_range": None,
+            "retailers": [],
+        }
+
+    try:
+        req_country = country or settings.SERPAPI_COUNTRY
+        params = {
+            "engine": "google_shopping",
+            "q": clean_q,
+            "api_key": settings.SERPAPI_API_KEY,
+            "country": req_country,
+            "hl": settings.SERPAPI_LANGUAGE,
+            "num": 8,
+        }
+        async with _serpapi_semaphore:
+            async with httpx.AsyncClient(timeout=8.0) as client:
+                response = await client.get("https://serpapi.com/search", params=params)
+                response.raise_for_status()
+                data = response.json()
+
+        price_insights = data.get("price_insights") or {}
+        typical_range = price_insights.get("typical_price_range")
+        typical_price_str = None
+        if isinstance(typical_range, list) and len(typical_range) >= 2:
+            typical_price_str = f"{typical_range[0]} – {typical_range[1]}"
+        elif isinstance(typical_range, str):
+            typical_price_str = typical_range
+
+        from backend.app.services.whitelist import is_domain_whitelisted
+        retailers = []
+        for item in data.get("shopping_results", [])[:6]:
+            link = item.get("product_link") or item.get("link") or ""
+            source_name = item.get("source") or parse_domain_from_url(link)
+            is_wl, trusted_name = is_domain_whitelisted(link)
+            
+            retailers.append({
+                "store_name": trusted_name or source_name,
+                "domain": parse_domain_from_url(link),
+                "price": item.get("price"),
+                "extracted_price": item.get("extracted_price"),
+                "link": link,
+                "rating": item.get("rating"),
+                "reviews": item.get("reviews"),
+                "delivery": item.get("delivery"),
+                "thumbnail": item.get("thumbnail"),
+                "is_authorized": is_wl or any(dom in source_name.lower() for dom in ["boat", "amazon", "flipkart", "croma", "reliance", "tatacliq", "myntra", "apple", "nike", "samsung", "sony", "walmart", "target"]),
+                "badge": item.get("badge") or ("Authorized Retailer" if is_wl else None),
+            })
+
+        # Sort retailers by price if available
+        priced_retailers = sorted(
+            retailers,
+            key=lambda r: (r["extracted_price"] is None, r["extracted_price"] or float("inf"))
+        )
+
+        return {
+            "query": clean_q,
+            "has_data": len(priced_retailers) > 0,
+            "typical_price_range": typical_price_str,
+            "retailers": priced_retailers,
+        }
+    except Exception as exc:
+        logger.warning("Google Shopping price matrix search unavailable for %s: %s", clean_q, exc)
+        return {
+            "query": clean_q,
+            "has_data": False,
+            "typical_price_range": None,
+            "retailers": [],
+        }
+
+
+

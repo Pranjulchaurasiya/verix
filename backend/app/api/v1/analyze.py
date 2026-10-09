@@ -26,7 +26,7 @@ from backend.app.services.storage import save_uploaded_image, compute_image_hash
 from backend.app.services.serpapi import (
     search_google_lens, enrich_with_secondary_engines, canonicalize_evidence_url,
     SerpApiDegradedException, parse_domain_from_url,
-    search_domain_trust_reputation, search_comparison_videos
+    search_domain_trust_reputation, search_comparison_videos, fetch_retailer_price_matrix
 )
 from backend.app.services.groq_agent import evaluate_authenticity_with_groq
 from backend.app.services.availability import append_availability_guidance
@@ -254,7 +254,7 @@ async def analyze_product(
     pricing_stats = analyze_price_distribution(matches, preferred_currency=preferred_curr)
 
     # -------------------------------------------------------------
-    # EXPANDED SERPAPI INTELLIGENCE: DOMAIN REPUTATION & REAL-VS-FAKE VIDEOS
+    # EXPANDED SERPAPI INTELLIGENCE: DOMAIN REPUTATION, VIDEOS & RETAILER MATRIX
     # -------------------------------------------------------------
     target_domain = parse_domain_from_url(url) if url else ""
     detected_title = extracted_title or next((m.get("title") for m in matches if m.get("title")), "")
@@ -267,15 +267,19 @@ async def analyze_product(
         
     if detected_title and len(detected_title.strip()) >= 4:
         sec_tasks.append(search_comparison_videos(detected_title))
+        sec_tasks.append(fetch_retailer_price_matrix(detected_title, country="IN" if preferred_curr == "INR" else "US"))
     else:
         sec_tasks.append(asyncio.sleep(0, result=[]))
+        sec_tasks.append(asyncio.sleep(0, result=None))
         
     domain_reputation = None
     comparison_videos = []
+    retailer_price_matrix = None
     try:
         sec_results = await asyncio.wait_for(asyncio.gather(*sec_tasks, return_exceptions=True), timeout=4.0)
         domain_reputation = sec_results[0] if (len(sec_results) > 0 and not isinstance(sec_results[0], Exception)) else None
         comparison_videos = sec_results[1] if (len(sec_results) > 1 and not isinstance(sec_results[1], Exception)) else []
+        retailer_price_matrix = sec_results[2] if (len(sec_results) > 2 and not isinstance(sec_results[2], Exception)) else None
     except Exception as e:
         logger.warning("Expanded SerpApi intelligence lookup exception: %s", e)
 
@@ -376,7 +380,8 @@ async def analyze_product(
             pricing_analysis=pricing_stats,
             provenance_details=provenance_info,
             domain_reputation=domain_reputation,
-            comparison_videos=comparison_videos
+            comparison_videos=comparison_videos,
+            retailer_price_matrix=retailer_price_matrix
         )
 
     # -------------------------------------------------------------
@@ -473,7 +478,8 @@ async def analyze_product(
         pricing_analysis=pricing_stats,
         provenance_details=provenance_info,
         domain_reputation=domain_reputation,
-        comparison_videos=comparison_videos
+        comparison_videos=comparison_videos,
+        retailer_price_matrix=retailer_price_matrix
     )
 
 

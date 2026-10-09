@@ -66,6 +66,7 @@ class ScanResponse(BaseModel):
     provenance_details: Optional[dict] = None
     domain_reputation: Optional[dict] = None
     comparison_videos: Optional[List[dict]] = []
+    retailer_price_matrix: Optional[dict] = None
 
 class ScanListItem(BaseModel):
     id: str
