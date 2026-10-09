@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ShieldCheck, CheckCircle2, AlertCircle, Loader2, KeyRound, Binary } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getApiBaseUrl } from "@/lib/client-scope"
 
 interface MerkleVerifyBadgeProps {
   scanId?: string
@@ -37,7 +38,7 @@ export function MerkleVerifyBadge({ scanId, demo }: MerkleVerifyBadgeProps) {
         return
       }
 
-      const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+      const base = getApiBaseUrl()
       
       // 1. Fetch the anchored dossier
       const dossierRes = await fetch(`${base}/api/v1/audit/dossier/${encodeURIComponent(scanId)}`)

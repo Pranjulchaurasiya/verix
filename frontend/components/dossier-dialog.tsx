@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ShieldCheck, Copy, Check, Download, Terminal, X, Code, CheckCircle2, Lock, FileSpreadsheet } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getApiBaseUrl } from "@/lib/client-scope"
 
 interface DossierDialogProps {
   scanId: string
@@ -61,7 +62,7 @@ export function DossierDialog({ scanId, isOpen, onClose, result }: DossierDialog
   }
 
   const downloadCsv = () => {
-    const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+    const base = getApiBaseUrl()
     if (!isDemo && scanId) {
       window.open(`${base}/api/v1/scans/${scanId}/export?format=csv`, "_blank")
     } else {

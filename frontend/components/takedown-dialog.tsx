@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ShieldAlert, Copy, Check, Download, ExternalLink, X, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getApiBaseUrl } from "@/lib/client-scope"
 
 interface TakedownDialogProps {
   scanId: string
@@ -40,7 +41,7 @@ export function TakedownDialog({ scanId, isOpen, onClose, demo }: TakedownDialog
         return
       }
 
-      const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+      const base = getApiBaseUrl()
       const res = await fetch(`${base}/api/v1/enforce/takedown/${encodeURIComponent(scanId)}`)
       if (res.ok) {
         const pkg = await res.json()

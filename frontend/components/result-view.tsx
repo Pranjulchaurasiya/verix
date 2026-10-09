@@ -13,6 +13,7 @@ import { MerkleVerifyBadge } from "@/components/merkle-verify-badge"
 import { TakedownDialog } from "@/components/takedown-dialog"
 import { PricingDistributionCard } from "@/components/pricing-distribution-card"
 import { DossierDialog } from "@/components/dossier-dialog"
+import { getApiBaseUrl } from "@/lib/client-scope"
 
 const CONFIDENCE_LABEL: Record<CheckResult["confidence"], string> = {
   low: "Low confidence",
@@ -37,7 +38,7 @@ export function ResultView({ result, onReset }: { result: CheckResult; onReset?:
       URL.revokeObjectURL(url)
       return
     }
-    const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+    const base = getApiBaseUrl()
     window.open(`${base}/api/v1/scans/${result.id}/export?format=${format}`, "_blank")
   }
 

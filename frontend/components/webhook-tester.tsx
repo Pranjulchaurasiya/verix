@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Webhook, Send, CheckCircle2, AlertCircle, Loader2, KeyRound, Copy, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getApiBaseUrl } from "@/lib/client-scope"
 
 export function WebhookTester() {
   const [url, setUrl] = useState("https://httpbin.org/post")
@@ -15,7 +16,7 @@ export function WebhookTester() {
     setLoading(true)
     setResult(null)
     try {
-      const base = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000").replace(/\/$/, "")
+      const base = getApiBaseUrl()
       const res = await fetch(`${base}/api/v1/webhooks/test`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
