@@ -24,6 +24,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: "pip"
+          cache-dependency-path: backend/requirements.txt
 
       - name: Install Dependencies
         run: |
@@ -31,14 +32,20 @@ jobs:
           pip install -r backend/requirements.txt
 
       - name: Run Backend Pytest Suite
+        env:
+          PYTHONPATH: .
         run: |
           python -m pytest backend/tests -v
 
       - name: Run Ground-Truth Benchmark Harness
+        env:
+          PYTHONPATH: .
         run: |
           python evaluate_ground_truth.py
 
       - name: Verify CLI Evidence Verification Tool
+        env:
+          PYTHONPATH: .
         run: |
           python verify_evidence_cli.py --help
 
@@ -53,7 +60,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9
+          version: 12
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
