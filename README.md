@@ -1,6 +1,6 @@
 # Verix — Cryptographically-Anchored Visual Intelligence & Counterfeit Risk Mitigation Engine
 
-[![CI/CD Pipeline](https://github.com/verix-ai/verix/actions/workflows/ci.yml/badge.svg)](https://github.com/verix-ai/verix/actions/workflows/ci.yml)
+[![CI/CD Pipeline](https://github.com/Pranjulchaurasiya/Verix/actions/workflows/ci.yml/badge.svg)](https://github.com/Pranjulchaurasiya/Verix/actions/workflows/ci.yml)
 [![Tests Passing](https://img.shields.io/badge/pytest-61%2F61%20passed-brightgreen.svg)](BENCHMARK_REPORT.md)
 [![Ground Truth Benchmark](https://img.shields.io/badge/Benchmark%20Pass%20Rate-100%25%20(7%2F7)-emerald.svg)](benchmark_report.json)
 [![Cryptography](https://img.shields.io/badge/Integrity-AWS%20KMS%20HSM%20%2B%20Merkle-purple.svg)](verify_evidence_cli.py)
@@ -11,13 +11,14 @@
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3.3%20Turbopack-black.svg)](https://nextjs.org/)
 
-Verix is an enterprise-grade visual intelligence engine engineered to detect unauthorized product photo reuse, bait-and-switch counterfeit pricing anomalies, and synthetic generative AI listings. Powered by **SerpApi Google Lens**, Verix crawls public marketplaces, extracts visual matches, assesses risk through deterministic mathematical boundaries, and anchors all harvested evidence into an immutable, cryptographically verifiable audit package.
+Verix is an enterprise-grade visual intelligence engine engineered to detect unauthorized product photo reuse, bait-and-switch counterfeit pricing anomalies, and synthetic generative AI listings. Powered by a **4-Tier SerpApi Engine Suite** (**Google Lens**, **Google Shopping**, **Google Search**, and **YouTube**), Verix crawls public marketplaces, extracts visual matches, benchmarks MSRP ranges across authorized distributors, audits storefront domain reputation, and anchors all harvested evidence into an immutable, cryptographically verifiable audit package.
 
 > 🌐 **Live Production Deployments**:
 > * **Live Web Application (Vercel)**: [https://verix-via-serpapi.vercel.app](https://verix-via-serpapi.vercel.app)
 > * **Backend API (Render)**: [https://verix-t4a1.onrender.com](https://verix-t4a1.onrender.com)
 > * **Interactive API Documentation (Swagger)**: [https://verix-t4a1.onrender.com/docs](https://verix-t4a1.onrender.com/docs)
 > * **Public AWS KMS Key Registry**: [https://verix-t4a1.onrender.com/api/v1/audit/keys](https://verix-t4a1.onrender.com/api/v1/audit/keys)
+> * **GitHub Repository**: [https://github.com/Pranjulchaurasiya/Verix](https://github.com/Pranjulchaurasiya/Verix)
 
 ---
 
@@ -95,8 +96,11 @@ flowchart TD
 
 ## Key Capabilities
 
-1. **SerpApi Google Lens Multi-Engine Engine:**
-   - Unified reverse-image retrieval across Google Lens, Google Shopping, and web reverse-image indexes with intelligent token caching and bounded secondary queries.
+1. **4-Tier SerpApi Visual & Market Intelligence Engine:**
+   - **Google Lens (`google_lens`)**: Reverse-image perceptual retrieval across web marketplaces with token-based caching.
+   - **Google Shopping (`google_shopping`)**: Live MSRP benchmark range, authorized distributor badges, delivery policies, and store pricing matrix.
+   - **Google Search (`google`)**: Domain reputation footprint, consumer forum scam watchdogs, and merchant complaint auditing.
+   - **YouTube Search (`youtube`)**: Video forensic unboxing guides and "Real vs Fake" side-by-side authenticity comparisons.
 2. **RFC 8032 Ed25519 & Merkle Inclusion Proofs:**
    - Every harvested match and assessment output is compiled into a binary Merkle tree and digitally signed. Third parties can verify evidence offline via `verify_evidence_cli.py` with zero reliance on the backend server.
 3. **Synthetic AI & C2PA Provenance Detection:**
@@ -154,8 +158,8 @@ The quickest method to deploy a production-grade stack including the Verix unifi
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/verix-ai/verix.git
-cd verix
+git clone https://github.com/Pranjulchaurasiya/Verix.git
+cd Verix
 
 # 2. Populate environment secrets
 cp .env.example .env
@@ -347,7 +351,7 @@ verix/
 │   │   │   └── sanitizer.py       # Non-accusatory language guardrails
 │   │   └── main.py                # ASGI application entrypoint
 │   ├── requirements.txt           # Production Python dependencies
-│   └── tests/                     # 60 automated pytest tests
+│   └── tests/                     # 61 automated pytest tests
 ├── frontend/                      # Next.js 16 (Turbopack) frontend console
 │   ├── app/                       # Next.js App Router (pages & layouts)
 │   ├── components/                # React components (form, matches, pricing, dossier)
