@@ -31,9 +31,10 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-.eggs/
-lib/
-lib64/
+# Python build & virtual environment dirs
+/lib/
+/lib64/
+!frontend/lib/
 parts/
 sdist/
 var/
