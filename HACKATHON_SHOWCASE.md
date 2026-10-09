@@ -11,11 +11,16 @@ Verix transforms unstructured web image results from **SerpApi Google Lens** int
 Built across **10 iterative engineering sprints**, Verix solves the three core bottlenecks of automated e-commerce protection:
 1. **API Cost & Latency:** Consolidated multi-tab Lens exploration into a single bounded call with token-bucket credit guards and 24h caching.
 2. **Ghost Listings & AI Fakes:** Integrated byte-level C2PA Content Credentials and synthetic generative AI provenance (Midjourney, Stable Diffusion, DALL-E, ComfyUI, SynthID markers).
-3. **Legal & Third-Party Verifiability:** Anchored every scraped match into an **RFC 8032 Ed25519** signature and binary **Merkle tree**, verified offline with zero server dependencies via `verify_evidence_cli.py`.
+3. **Legal & Third-Party Verifiability:** Anchored every scraped match into a **FIPS 186-4 Hardware-Backed AWS Cloud KMS (HSM) ECDSA P-256** signature and binary **Merkle tree** (with RFC 8032 Ed25519 fallback), verified offline with zero server dependencies via `verify_evidence_cli.py`.
+
+> 🌐 **Live Production Deployment**:
+> * **Backend API**: [https://verix-t4a1.onrender.com](https://verix-t4a1.onrender.com)
+> * **Interactive API Docs (Swagger)**: [https://verix-t4a1.onrender.com/docs](https://verix-t4a1.onrender.com/docs)
+> * **Live Hardware KMS Public Key Registry**: [https://verix-t4a1.onrender.com/api/v1/audit/keys](https://verix-t4a1.onrender.com/api/v1/audit/keys)
 
 ---
 
-## 1. Complete 10-Sprint Engineering Progression
+## 1. Complete Engineering Progression
 
 | Sprint | Architecture Milestone | Key Capabilities Delivered | Test Target |
 |:---:|:---|:---|:---:|
@@ -29,6 +34,7 @@ Built across **10 iterative engineering sprints**, Verix solves the three core b
 | **8** | **Offline CLI Verifier & Benchmark Harness** | Zero-trust standalone `verify_evidence_cli.py` and reproducible 7-point evaluation harness `evaluate_ground_truth.py`. | `test_cli_and_harness.py` |
 | **9** | **Enterprise Marketplace Webhook Engine** | Real-time event streaming with Stripe-compatible HMAC-SHA256 headers (`X-Verix-Signature`) and replay rejection. | `test_webhooks.py` |
 | **10** | **Verix Verifiable Dossier (VVD) Inspector** | Interactive in-app cryptographic inspector modal with live client verification, CLI command copy, and full manifest export. | `dossier-dialog.tsx` |
+| **11** | **Enterprise Hardware Cloud KMS (HSM) & Redis** | FIPS 186-4 ECDSA P-256 signing via AWS KMS HSM (`alias/verix-evidence-signer`); single-flight Redis cache anti-stampede locks. | `test_audit_merkle.py` |
 
 ---
 

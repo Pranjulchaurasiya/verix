@@ -1,15 +1,21 @@
 # Verix — Cryptographically-Anchored Visual Intelligence & Counterfeit Risk Mitigation Engine
 
 [![CI/CD Pipeline](https://github.com/verix-ai/verix/actions/workflows/ci.yml/badge.svg)](https://github.com/verix-ai/verix/actions/workflows/ci.yml)
-[![Tests Passing](https://img.shields.io/badge/pytest-60%2F60%20passed-brightgreen.svg)](BENCHMARK_REPORT.md)
+[![Tests Passing](https://img.shields.io/badge/pytest-61%2F61%20passed-brightgreen.svg)](BENCHMARK_REPORT.md)
 [![Ground Truth Benchmark](https://img.shields.io/badge/Benchmark%20Pass%20Rate-100%25%20(7%2F7)-emerald.svg)](benchmark_report.json)
-[![Cryptography](https://img.shields.io/badge/Integrity-RFC%208032%20Ed25519%20%2B%20Merkle-purple.svg)](verify_evidence_cli.py)
+[![Cryptography](https://img.shields.io/badge/Integrity-AWS%20KMS%20HSM%20%2B%20Merkle-purple.svg)](verify_evidence_cli.py)
+[![Live Backend](https://img.shields.io/badge/Render-Live%20Backend-46e3b7.svg)](https://verix-t4a1.onrender.com)
 [![YouTube Demo](https://img.shields.io/badge/YouTube-Product%20Demo%20(27s)-red?logo=youtube)](https://youtu.be/XGYe5E_hoCo)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3.3%20Turbopack-black.svg)](https://nextjs.org/)
 
 Verix is an enterprise-grade visual intelligence engine engineered to detect unauthorized product photo reuse, bait-and-switch counterfeit pricing anomalies, and synthetic generative AI listings. Powered by **SerpApi Google Lens**, Verix crawls public marketplaces, extracts visual matches, assesses risk through deterministic mathematical boundaries, and anchors all harvested evidence into an immutable, cryptographically verifiable audit package.
+
+> 🌐 **Live Production Deployments**:
+> * **Backend API**: [https://verix-t4a1.onrender.com](https://verix-t4a1.onrender.com)
+> * **Interactive API Documentation (Swagger)**: [https://verix-t4a1.onrender.com/docs](https://verix-t4a1.onrender.com/docs)
+> * **Public AWS KMS Key Registry**: [https://verix-t4a1.onrender.com/api/v1/audit/keys](https://verix-t4a1.onrender.com/api/v1/audit/keys)
 
 ---
 
