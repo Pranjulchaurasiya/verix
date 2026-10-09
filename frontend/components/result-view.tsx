@@ -39,6 +39,9 @@ export function ResultView({ result, onReset }: { result: CheckResult; onReset?:
       return
     }
     const base = getApiBaseUrl()
+    window.open(`${base}/api/v1/scans/${result.id}/export?format=${format}`, "_blank")
+  }
+
   const sourceHost = result.sourceUrl ? (() => { try { return new URL(result.sourceUrl).hostname.replace(/^www\./, "").toLowerCase() } catch { return "" } })() : ""
   const isDirectBrand = ["boat-lifestyle.com", "apple.com", "nike.com", "adidas.com", "adidas.co.in", "samsung.com", "sony.com", "sony.co.in", "zara.com", "hm.com", "uniqlo.com", "puma.com"].some(dom => sourceHost.includes(dom))
   const isMarketplace = ["amazon.in", "amazon.com", "flipkart.com", "myntra.com", "ajio.com", "nykaa.com", "meesho.com", "tatacliq.com", "croma.com", "reliancedigital.in", "ebay.com", "walmart.com", "target.com", "etsy.com", "bestbuy.com"].some(dom => sourceHost.includes(dom))
