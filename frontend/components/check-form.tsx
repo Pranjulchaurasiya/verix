@@ -68,7 +68,7 @@ export function CheckForm({
       }
 
       // Amazon ASIN URL
-      const asinMatch = trimmed.match(/\/(?:dp|gp\/product|d|product)\/([A-Z0-9]{10})/i)
+      const asinMatch = trimmed.match(/(?:\/dp\/|\/gp\/product\/|\/gp\/aw\/d\/|\/d\/|\/product\/|\/gp\/offer-listing\/|[?&]asin=)([A-Z0-9]{10})/i)
       if (asinMatch && (hostname.includes("amazon.") || hostname.includes("amzn."))) {
         const asin = asinMatch[1].toUpperCase()
         return {

@@ -92,10 +92,24 @@ def _is_tracking_or_icon_url(url_str: str) -> bool:
     return any(kw in lower for kw in EXCLUDED_IMAGE_KEYWORDS)
 
 async def _resolve_amazon_asin_image(target_url: str) -> Optional[Tuple[bytes, str, str]]:
-    asin_match = re.search(r'/(?:dp|gp/product|d|product)/([A-Z0-9]{10})', target_url)
+    # If this is an Amazon shortlink (e.g. amzn.in/d/..., amzn.to/...), resolve the redirect first
+    if any(dom in target_url.lower() for dom in ["amzn.in", "amzn.to", "amzn.asia"]):
+        try:
+            async with httpx.AsyncClient(timeout=6.0, headers=SCRAPER_HEADERS, follow_redirects=True) as red_client:
+                r = await red_client.get(target_url)
+                if r.status_code < 400 and str(r.url) != target_url:
+                    target_url = str(r.url)
+        except Exception:
+            pass
+
+    asin_match = re.search(
+        r'(?:/dp/|/gp/product/|/gp/aw/d/|/d/|/product/|/gp/offer-listing/|[?&]asin=)([A-Z0-9]{10})',
+        target_url,
+        re.IGNORECASE
+    )
     if not (asin_match and any(dom in target_url.lower() for dom in ["amazon.", "amzn."])):
         return None
-    asin = asin_match.group(1)
+    asin = asin_match.group(1).upper()
     amazon_cdn_urls = [
         f"https://images-na.ssl-images-amazon.com/images/P/{asin}.01.MAIN._SCRM_.jpg",
         f"https://m.media-amazon.com/images/P/{asin}.01._SCLZZZZZZZ_SX500_.jpg",

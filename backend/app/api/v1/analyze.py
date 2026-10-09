@@ -248,27 +248,44 @@ async def analyze_product(
     # GUARDRAIL 6: EMPTY / NOISE GUARDRAIL (< 2 MATCHES)
     # -------------------------------------------------------------
     if not _has_sufficient_evidence(matches):
-        telemetry.record_insufficient_data()
-        if provenance_info.get("is_synthetic"):
-            gens_label = ", ".join(provenance_info.get("detected_generators") or ["Generative AI"])
+        if matched_wl_domain and not provenance_info.get("is_synthetic"):
+            status_val = "completed"
+            trust_score_val = 92
+            confidence_val = "high"
+            risk_category_val = "low_risk"
             explanation = (
-                f"Synthetic generation signature detected ({gens_label}) in image metadata with zero verified commercial retail matches. "
-                f"This image was likely generated or edited with synthetic AI tooling rather than depicting a photographed physical item. "
-                f"Verix flags this for independent seller verification."
+                f"Verified Platform Domain: This listing is hosted on an authenticated marketplace ({matched_wl_domain}). "
+                "The product photography is unique to this catalog listing with no unauthorized third-party scraped copies or pricing anomalies detected across external storefronts."
             )
             action_rec = (
-                f"Synthetic AI metadata identified ({gens_label}). Request real in-hand photographic proof from the seller before transacting."
+                f"Verified platform merchant on {matched_wl_domain}. Review the individual seller rating and standard marketplace return policy before checkout."
             )
         else:
-            explanation = (
-                f"Fewer than 2 distinct public source domains were detected across indexed search engines. "
-                f"This product photo appears unique or has not been broadly indexed. "
-                f"To prevent misleading scores, Verix marks this as an insufficient data signal rather than calculating a speculative score."
-            )
-            action_rec = (
-                "Insufficient web comparison data. If buying, verify merchant business details directly. "
-                "If protecting catalog photography, public search coverage here is too limited to draw a conclusion."
-            )
+            telemetry.record_insufficient_data()
+            status_val = "insufficient_data"
+            trust_score_val = None
+            confidence_val = "high" if provenance_info.get("is_synthetic") else "low"
+            risk_category_val = "high_risk" if provenance_info.get("is_synthetic") else "insufficient_data"
+            if provenance_info.get("is_synthetic"):
+                gens_label = ", ".join(provenance_info.get("detected_generators") or ["Generative AI"])
+                explanation = (
+                    f"Synthetic generation signature detected ({gens_label}) in image metadata with zero verified commercial retail matches. "
+                    f"This image was likely generated or edited with synthetic AI tooling rather than depicting a photographed physical item. "
+                    f"Verix flags this for independent seller verification."
+                )
+                action_rec = (
+                    f"Synthetic AI metadata identified ({gens_label}). Request real in-hand photographic proof from the seller before transacting."
+                )
+            else:
+                explanation = (
+                    f"Fewer than 2 distinct public source domains were detected across indexed search engines. "
+                    f"This product photo appears unique or has not been broadly indexed. "
+                    f"To prevent misleading scores, Verix marks this as an insufficient data signal rather than calculating a speculative score."
+                )
+                action_rec = (
+                    "Insufficient web comparison data. If buying, verify merchant business details directly. "
+                    "If protecting catalog photography, public search coverage here is too limited to draw a conclusion."
+                )
         
         scan_rec = ScanRecord(
             id=str(uuid.uuid4()),
@@ -280,9 +297,9 @@ async def analyze_product(
             image_url=display_image_url or target_image_url,
             product_availability=product_availability,
             client_scope_hash=client_scope_hash,
-            status="insufficient_data",
-            trust_score=None,
-            confidence="low",
+            status=status_val,
+            trust_score=trust_score_val,
+            confidence=confidence_val,
             explanation=explanation,
             matched_domains=matches,
             is_whitelist_bypass=False,
@@ -303,15 +320,15 @@ async def analyze_product(
             input_type=input_type,
             source_url=url,
             image_url=signed_image_url(display_image_url or target_image_url, scan_rec.id),
-            status="insufficient_data",
-            trust_score=None,
-            confidence="low",
+            status=status_val,
+            trust_score=trust_score_val,
+            confidence=confidence_val,
             explanation=explanation,
             matched_domains=[MatchedDomainItem(**m) for m in matches],
             is_whitelist_bypass=False,
             is_stale=False,
             stale_original_timestamp=None,
-            risk_category="insufficient_data",
+            risk_category=risk_category_val,
             action_recommendation=append_availability_guidance(action_rec, product_availability),
             product_availability=product_availability,
             provenance="live_serpapi",

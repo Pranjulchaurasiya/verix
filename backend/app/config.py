@@ -94,6 +94,8 @@ class Settings(BaseSettings):
     WHITELISTED_DOMAINS: List[str] = [
         # Major Indian Marketplaces
         "amazon.in",
+        "amzn.in",
+        "amzn.to",
         "flipkart.com",
         "meesho.com",
         "myntra.com",
@@ -107,6 +109,13 @@ class Settings(BaseSettings):
         
         # Major Global Marketplaces
         "amazon.com",
+        "amazon.co.uk",
+        "amazon.ca",
+        "amazon.de",
+        "amazon.fr",
+        "amazon.co.jp",
+        "amazon.com.au",
+        "amzn.asia",
         "ebay.com",
         "walmart.com",
         "etsy.com",
