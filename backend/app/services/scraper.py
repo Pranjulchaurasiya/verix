@@ -8,6 +8,7 @@ import httpx
 from bs4 import BeautifulSoup
 from typing import Tuple, Optional
 import logging
+from backend.app.config import settings
 
 logger = logging.getLogger("verix.scraper")
 
@@ -127,6 +128,43 @@ async def _resolve_amazon_asin_image(target_url: str) -> Optional[Tuple[bytes, s
                 logger.debug("Amazon CDN candidate failed for %s: %s", c_url, exc)
     return None
 
+async def _resolve_image_via_serpapi(target_url: str) -> Optional[Tuple[bytes, str, Optional[str], str]]:
+    serpapi_key = getattr(settings, "SERPAPI_API_KEY", None)
+    if not serpapi_key:
+        return None
+    try:
+        async with httpx.AsyncClient(timeout=8.0) as client:
+            resp = await client.get(
+                "https://serpapi.com/search",
+                params={
+                    "engine": "google_images",
+                    "q": target_url,
+                    "api_key": serpapi_key,
+                }
+            )
+            if resp.status_code != 200:
+                return None
+            data = resp.json()
+            images_results = data.get("images_results", [])
+            for item in images_results:
+                cand_url = item.get("original") or item.get("thumbnail")
+                if not cand_url:
+                    continue
+                try:
+                    _validate_public_url(cand_url)
+                    img_resp = await client.get(cand_url, timeout=6.0, follow_redirects=True)
+                    if img_resp.status_code == 200 and len(img_resp.content) >= 1000:
+                        with Image.open(io.BytesIO(img_resp.content)) as pil_img:
+                            if pil_img.size[0] >= 60 and pil_img.size[1] >= 60:
+                                title = item.get("title")
+                                logger.info("Resolved high-res product photo via SerpApi Google Images: %s", cand_url)
+                                return img_resp.content, cand_url, title, "in_stock"
+                except Exception:
+                    continue
+    except Exception as exc:
+        logger.debug("SerpApi fallback image resolution failed: %s", exc)
+    return None
+
 async def extract_product_image_from_url(url: str) -> Tuple[bytes, str, Optional[str], str]:
     """
     Fetches the URL. If it's directly an image, downloads and validates it.
@@ -149,6 +187,10 @@ async def extract_product_image_from_url(url: str) -> Tuple[bytes, str, Optional
             # If the remote storefront blocked scraping (e.g. anti-bot 503) but we have the ASIN image, use it!
             if amazon_cdn_payload:
                 return amazon_cdn_payload[0], amazon_cdn_payload[1], f"Amazon Product ({amazon_cdn_payload[2]})", "unknown"
+            # Fallback to SerpApi Google Images when storefront blocks datacenter scraping
+            serpapi_payload = await _resolve_image_via_serpapi(url)
+            if serpapi_payload:
+                return serpapi_payload
             raise fetch_exc
         
         content_type = resp.headers.get("content-type", "").lower()
@@ -281,6 +323,11 @@ async def extract_product_image_from_url(url: str) -> Tuple[bytes, str, Optional
         # 6. Fallback to pre-fetched Amazon CDN image if available
         if amazon_cdn_payload:
             return amazon_cdn_payload[0], amazon_cdn_payload[1], page_title, availability
+
+        # 7. Fallback to SerpApi Google Images when DOM has no extractable image (anti-bot challenge page)
+        serpapi_payload = await _resolve_image_via_serpapi(url)
+        if serpapi_payload:
+            return serpapi_payload
 
         raise ValueError("No valid product image could be detected on the provided webpage URL.")
 
