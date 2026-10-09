@@ -132,37 +132,52 @@ async def _resolve_image_via_serpapi(target_url: str) -> Optional[Tuple[bytes, s
     serpapi_key = getattr(settings, "SERPAPI_API_KEY", None)
     if not serpapi_key:
         return None
-    try:
-        async with httpx.AsyncClient(timeout=8.0) as client:
-            resp = await client.get(
-                "https://serpapi.com/search",
-                params={
-                    "engine": "google_images",
-                    "q": target_url,
-                    "api_key": serpapi_key,
-                }
-            )
-            if resp.status_code != 200:
-                return None
-            data = resp.json()
-            images_results = data.get("images_results", [])
-            for item in images_results:
-                cand_url = item.get("original") or item.get("thumbnail")
-                if not cand_url:
+
+    # Derive candidate queries: raw URL, and the product title slug from the URL path
+    parsed = urlparse(target_url)
+    path = parsed.path.strip('/')
+    segments = [s for s in path.split('/') if s]
+    filtered = [s for s in segments if s.lower() not in {'buy', 'dp', 'p', 'product', 'item', 'gp', 'd', 'cart'}]
+    slugs = [s for s in filtered if ('-' in s or '_' in s) and len(s) >= 8]
+
+    query_candidates = [target_url]
+    if slugs:
+        longest = max(slugs, key=len)
+        query_candidates.append(longest)
+
+    for query in query_candidates:
+        try:
+            async with httpx.AsyncClient(timeout=25.0) as client:
+                resp = await client.get(
+                    "https://serpapi.com/search",
+                    params={
+                        "engine": "google_images",
+                        "q": query,
+                        "api_key": serpapi_key,
+                    }
+                )
+                if resp.status_code != 200:
                     continue
-                try:
-                    _validate_public_url(cand_url)
-                    img_resp = await client.get(cand_url, timeout=6.0, follow_redirects=True)
-                    if img_resp.status_code == 200 and len(img_resp.content) >= 1000:
-                        with Image.open(io.BytesIO(img_resp.content)) as pil_img:
-                            if pil_img.size[0] >= 60 and pil_img.size[1] >= 60:
-                                title = item.get("title")
-                                logger.info("Resolved high-res product photo via SerpApi Google Images: %s", cand_url)
-                                return img_resp.content, cand_url, title, "in_stock"
-                except Exception:
-                    continue
-    except Exception as exc:
-        logger.debug("SerpApi fallback image resolution failed: %s", exc)
+                data = resp.json()
+                images_results = data.get("images_results", [])
+                for item in images_results:
+                    cand_url = item.get("original") or item.get("thumbnail")
+                    if not cand_url:
+                        continue
+                    try:
+                        _validate_public_url(cand_url)
+                        img_resp = await client.get(cand_url, timeout=10.0, follow_redirects=True)
+                        if img_resp.status_code == 200 and len(img_resp.content) >= 1000:
+                            with Image.open(io.BytesIO(img_resp.content)) as pil_img:
+                                if pil_img.size[0] >= 60 and pil_img.size[1] >= 60:
+                                    title = item.get("title")
+                                    logger.info("Resolved high-res product photo via SerpApi Google Images (%s): %s", query, cand_url)
+                                    return img_resp.content, cand_url, title, "in_stock"
+                    except Exception:
+                        continue
+        except Exception as exc:
+            logger.debug("SerpApi fallback candidate failed for %s: %s", query, exc)
+            continue
     return None
 
 async def extract_product_image_from_url(url: str) -> Tuple[bytes, str, Optional[str], str]:
