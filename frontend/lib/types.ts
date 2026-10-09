@@ -77,6 +77,8 @@ export interface CheckResult {
   detectedGenerators?: string[]
   pricingAnalysis?: any
   provenanceDetails?: any
+  domainReputation?: any
+  comparisonVideos?: any[]
 }
 
 export interface HealthEvent {

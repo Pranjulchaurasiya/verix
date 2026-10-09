@@ -246,6 +246,39 @@ export function analyzeImage(input: AnalyzeInput): CheckResult {
     currency: "INR",
     degraded: input.seed.includes("cached"),
     lastVerifiedAt: input.seed.includes("cached") ? new Date(Date.now() - 86400000).toISOString() : now,
+    domainReputation: {
+      domain: input.sourceUrl ? (() => { try { return new URL(input.sourceUrl).hostname.replace(/^www\./, "") } catch { return "resell-kicks-india.in" } })() : "resell-kicks-india.in",
+      status: verdict === "high_risk" ? "suspicious" : "trusted",
+      trust_score: verdict === "high_risk" ? 38 : 95,
+      verdict_label: verdict === "high_risk" ? "Consumer Complaints Detected on Forums & Watchdogs" : "Verified Store Domain with Clean Web Footprint",
+      warning_signals: verdict === "high_risk" ? ["Multiple chargeback complaints reported", "Unverified merchant registration"] : [],
+      snippet_samples: [
+        verdict === "high_risk"
+          ? "Shoppers on consumer forums report non-delivery and unboxed replica goods from this storefront."
+          : "Verified brand distributor with standard return and dispute resolution policies."
+      ],
+      sources_analyzed: 4
+    },
+    comparisonVideos: [
+      {
+        title: "Real vs Fake Comparison: How to Spot the Counterfeit",
+        link: "https://www.youtube.com/results?search_query=real+vs+fake+unboxing",
+        thumbnail: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400",
+        channel: "Authentic Sneaker Lab",
+        views: "184K views",
+        length: "8:24",
+        published_date: "2 weeks ago"
+      },
+      {
+        title: "Packaging & Serial Tag Forensic Unboxing Guide",
+        link: "https://www.youtube.com/results?search_query=spot+counterfeit+packaging",
+        thumbnail: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400",
+        channel: "Legit Check Live",
+        views: "92K views",
+        length: "5:12",
+        published_date: "1 month ago"
+      }
+    ],
   }
 }
 

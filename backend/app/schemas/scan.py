@@ -64,6 +64,8 @@ class ScanResponse(BaseModel):
     detected_generators: List[str] = []
     pricing_analysis: Optional[dict] = None
     provenance_details: Optional[dict] = None
+    domain_reputation: Optional[dict] = None
+    comparison_videos: Optional[List[dict]] = []
 
 class ScanListItem(BaseModel):
     id: str

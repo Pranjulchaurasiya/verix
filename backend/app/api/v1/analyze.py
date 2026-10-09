@@ -4,12 +4,15 @@ import uuid
 import hashlib
 import hmac
 import asyncio
+import logging
 from datetime import datetime, timezone
 from typing import Optional, List
 from urllib.parse import urlparse
 from fastapi import APIRouter, Depends, UploadFile, File, Form, Header, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, or_
+
+logger = logging.getLogger("verix.analyze")
 
 from backend.app.database import get_db
 from backend.app.models.scan import ScanRecord
@@ -20,7 +23,11 @@ from backend.app.schemas.scan import (
 from backend.app.services.whitelist import is_domain_whitelisted
 from backend.app.services.scraper import extract_product_image_from_url
 from backend.app.services.storage import save_uploaded_image, compute_image_hashes, validate_image_bytes, signed_image_url
-from backend.app.services.serpapi import search_google_lens, enrich_with_secondary_engines, canonicalize_evidence_url, SerpApiDegradedException
+from backend.app.services.serpapi import (
+    search_google_lens, enrich_with_secondary_engines, canonicalize_evidence_url,
+    SerpApiDegradedException, parse_domain_from_url,
+    search_domain_trust_reputation, search_comparison_videos
+)
 from backend.app.services.groq_agent import evaluate_authenticity_with_groq
 from backend.app.services.availability import append_availability_guidance
 from backend.app.services.provenance import analyze_image_provenance, analyze_image_provenance_async
@@ -247,6 +254,32 @@ async def analyze_product(
     pricing_stats = analyze_price_distribution(matches, preferred_currency=preferred_curr)
 
     # -------------------------------------------------------------
+    # EXPANDED SERPAPI INTELLIGENCE: DOMAIN REPUTATION & REAL-VS-FAKE VIDEOS
+    # -------------------------------------------------------------
+    target_domain = parse_domain_from_url(url) if url else ""
+    detected_title = extracted_title or next((m.get("title") for m in matches if m.get("title")), "")
+    
+    sec_tasks = []
+    if target_domain:
+        sec_tasks.append(search_domain_trust_reputation(target_domain))
+    else:
+        sec_tasks.append(asyncio.sleep(0, result=None))
+        
+    if detected_title and len(detected_title.strip()) >= 4:
+        sec_tasks.append(search_comparison_videos(detected_title))
+    else:
+        sec_tasks.append(asyncio.sleep(0, result=[]))
+        
+    domain_reputation = None
+    comparison_videos = []
+    try:
+        sec_results = await asyncio.wait_for(asyncio.gather(*sec_tasks, return_exceptions=True), timeout=4.0)
+        domain_reputation = sec_results[0] if (len(sec_results) > 0 and not isinstance(sec_results[0], Exception)) else None
+        comparison_videos = sec_results[1] if (len(sec_results) > 1 and not isinstance(sec_results[1], Exception)) else []
+    except Exception as e:
+        logger.warning("Expanded SerpApi intelligence lookup exception: %s", e)
+
+    # -------------------------------------------------------------
     # GUARDRAIL 6: EMPTY / NOISE GUARDRAIL (< 2 MATCHES)
     # -------------------------------------------------------------
     if not _has_sufficient_evidence(matches):
@@ -341,7 +374,9 @@ async def analyze_product(
             provenance_summary=provenance_info.get("summary"),
             detected_generators=provenance_info.get("detected_generators", []),
             pricing_analysis=pricing_stats,
-            provenance_details=provenance_info
+            provenance_details=provenance_info,
+            domain_reputation=domain_reputation,
+            comparison_videos=comparison_videos
         )
 
     # -------------------------------------------------------------
@@ -436,7 +471,9 @@ async def analyze_product(
         provenance_summary=provenance_info.get("summary"),
         detected_generators=provenance_info.get("detected_generators", []),
         pricing_analysis=pricing_stats,
-        provenance_details=provenance_info
+        provenance_details=provenance_info,
+        domain_reputation=domain_reputation,
+        comparison_videos=comparison_videos
     )
 
 

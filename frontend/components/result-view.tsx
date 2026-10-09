@@ -12,6 +12,8 @@ import { EvidencePanel } from "@/components/evidence-panel"
 import { MerkleVerifyBadge } from "@/components/merkle-verify-badge"
 import { TakedownDialog } from "@/components/takedown-dialog"
 import { PricingDistributionCard } from "@/components/pricing-distribution-card"
+import { DomainReputationCard } from "@/components/domain-reputation-card"
+import { ComparisonVideosCard } from "@/components/comparison-videos-card"
 import { DossierDialog } from "@/components/dossier-dialog"
 import { getApiBaseUrl } from "@/lib/client-scope"
 
@@ -178,6 +180,10 @@ export function ResultView({ result, onReset }: { result: CheckResult; onReset?:
       <MerkleVerifyBadge scanId={result.id} demo={result.demo} />
 
       <PricingDistributionCard pricingAnalysis={result.pricingAnalysis} />
+
+      <DomainReputationCard domainReputation={result.domainReputation} />
+
+      <ComparisonVideosCard comparisonVideos={result.comparisonVideos} />
 
       <section className="rounded-xl border border-border bg-card p-4" aria-label="Evidence coverage">
         <div className="flex items-center justify-between">

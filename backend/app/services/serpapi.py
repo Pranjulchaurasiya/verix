@@ -612,3 +612,161 @@ async def enrich_with_secondary_engines(matches: List[Dict[str, Any]]) -> List[D
             logger.warning("Secondary engines encountered error: %s", exc)
     return _dedupe_matches(enriched)
 
+
+async def search_domain_trust_reputation(domain: str) -> Dict[str, Any]:
+    """
+    Evaluates domain reputation and scam/consumer complaint signals using SerpApi Google search.
+    Checks for Trustpilot, Reddit, scam adviser, and consumer fraud signals. Fail-soft by design.
+    """
+    clean_domain = (domain or "").strip().lower().removeprefix("www.")
+    if not clean_domain:
+        return {
+            "domain": "",
+            "status": "unknown",
+            "trust_score": None,
+            "verdict_label": "No store domain provided",
+            "warning_signals": [],
+            "snippet_samples": [],
+            "sources_analyzed": 0,
+            "is_whitelisted": False,
+        }
+
+    # Fast heuristic for well-known verified platforms and brand flagships
+    from backend.app.services.whitelist import is_domain_whitelisted
+    is_wl, trusted_name = is_domain_whitelisted(f"https://{clean_domain}")
+    if is_wl:
+        return {
+            "domain": clean_domain,
+            "status": "trusted",
+            "trust_score": 96,
+            "verdict_label": f"Verified Platform / Brand Flagship ({trusted_name or clean_domain})",
+            "warning_signals": [],
+            "snippet_samples": ["Verified marketplace with active buyer dispute protection."],
+            "sources_analyzed": 1,
+            "is_whitelisted": True,
+        }
+
+    if not settings.SERPAPI_API_KEY:
+        return {
+            "domain": clean_domain,
+            "status": "neutral",
+            "trust_score": 75,
+            "verdict_label": "Standard Web Footprint",
+            "warning_signals": [],
+            "snippet_samples": [],
+            "sources_analyzed": 0,
+            "is_whitelisted": False,
+        }
+
+    try:
+        query = f'"{clean_domain}" (scam OR fake OR counterfeit OR "trustpilot" OR review)'
+        params = {
+            "engine": "google",
+            "q": query,
+            "api_key": settings.SERPAPI_API_KEY,
+            "country": settings.SERPAPI_COUNTRY,
+            "hl": settings.SERPAPI_LANGUAGE,
+            "num": 5,
+        }
+        async with _serpapi_semaphore:
+            async with httpx.AsyncClient(timeout=6.0) as client:
+                response = await client.get("https://serpapi.com/search", params=params)
+                response.raise_for_status()
+                data = response.json()
+
+        organic = data.get("organic_results", [])
+        scam_keywords = ["scam", "counterfeit", "fake", "fraud", "beware", "avoid", "ripoff", "never received", "chargeback"]
+        warnings = []
+        snippets = []
+
+        scam_hit_count = 0
+        for item in organic[:5]:
+            snippet = sanitize_scraped_text(item.get("snippet", ""))
+            title = sanitize_scraped_text(item.get("title", ""))
+            combined = (title + " " + snippet).lower()
+            if any(k in combined for k in scam_keywords):
+                scam_hit_count += 1
+                warnings.append(title)
+            if snippet:
+                snippets.append(snippet[:180])
+
+        if scam_hit_count >= 2:
+            status = "suspicious"
+            score = max(20, 70 - (scam_hit_count * 20))
+            label = "Caution: Consumer Complaints or Scam Alerts Detected"
+        elif scam_hit_count == 1:
+            status = "caution"
+            score = 65
+            label = "Mixed Reputation Signals on Public Forums"
+        else:
+            status = "trusted" if len(organic) >= 3 else "neutral"
+            score = 85 if len(organic) >= 3 else 75
+            label = "Clean Domain Footprint: No Serious Scam Signals Found"
+
+        return {
+            "domain": clean_domain,
+            "status": status,
+            "trust_score": score,
+            "verdict_label": label,
+            "warning_signals": warnings[:3],
+            "snippet_samples": snippets[:3],
+            "sources_analyzed": len(organic),
+            "is_whitelisted": False,
+        }
+    except Exception as exc:
+        logger.warning("Domain reputation search unavailable for %s: %s", clean_domain, exc)
+        return {
+            "domain": clean_domain,
+            "status": "neutral",
+            "trust_score": 70,
+            "verdict_label": "Unindexed or New Domain",
+            "warning_signals": [],
+            "snippet_samples": [],
+            "sources_analyzed": 0,
+            "is_whitelisted": False,
+        }
+
+
+async def search_comparison_videos(query: str) -> List[Dict[str, Any]]:
+    """
+    Fetches real-vs-fake comparison, teardown, and unboxing videos using SerpApi YouTube engine.
+    """
+    clean_q = _safe_search_query(query)
+    if not clean_q or len(clean_q) < 4 or not settings.SERPAPI_API_KEY:
+        return []
+
+    try:
+        search_term = f'"{clean_q}" real vs fake OR unboxing'
+        params = {
+            "engine": "youtube",
+            "search_query": search_term,
+            "api_key": settings.SERPAPI_API_KEY,
+        }
+        async with _serpapi_semaphore:
+            async with httpx.AsyncClient(timeout=6.0) as client:
+                response = await client.get("https://serpapi.com/search", params=params)
+                response.raise_for_status()
+                data = response.json()
+
+        videos = []
+        for item in data.get("video_results", [])[:3]:
+            channel_info = item.get("channel", {})
+            channel_name = channel_info.get("name") if isinstance(channel_info, dict) else str(channel_info or "YouTube")
+            thumbnail = item.get("thumbnail")
+            if isinstance(thumbnail, dict):
+                thumbnail = thumbnail.get("static") or thumbnail.get("rich")
+            videos.append({
+                "title": sanitize_scraped_text(item.get("title", "")),
+                "link": item.get("link", ""),
+                "thumbnail": thumbnail,
+                "channel": channel_name,
+                "views": item.get("views"),
+                "length": item.get("length"),
+                "published_date": item.get("published_date"),
+            })
+        return videos
+    except Exception as exc:
+        logger.warning("YouTube video search unavailable for %s: %s", clean_q, exc)
+        return []
+
+
