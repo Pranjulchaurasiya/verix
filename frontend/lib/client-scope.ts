@@ -25,13 +25,16 @@ export function getApiBaseUrl(): string {
     // When running under Next.js dev server (port 3000), target FastAPI on port 8000
     if (window.location.port === "3000") {
       base = `${window.location.protocol}//${window.location.hostname}:8000`
+    } else if (window.location.hostname.endsWith("vercel.app") || window.location.hostname.includes("verix")) {
+      // In Vercel standalone frontend deployment, route directly to the live Render FastAPI backend
+      base = "https://verix-t4a1.onrender.com"
     } else {
       // In production unified deployment, the API is served from the same origin
       base = window.location.origin
     }
   }
   if (!base) {
-    base = "http://127.0.0.1:8000"
+    base = "https://verix-t4a1.onrender.com"
   }
   return base.replace(/\/$/, "")
 }
