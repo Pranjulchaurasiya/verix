@@ -55,7 +55,7 @@ class Settings(BaseSettings):
     # Enterprise Cloud KMS & Distributed Redis Caching
     USE_CLOUD_KMS: bool = False
     KMS_KEY_ID: Optional[str] = None
-    KMS_REGION: str = "us-east-1"
+    KMS_REGION: str = "ap-south-1"
     REDIS_URL: Optional[str] = None
     ALLOWED_ORIGINS: List[str] = [
         "http://localhost:3000",

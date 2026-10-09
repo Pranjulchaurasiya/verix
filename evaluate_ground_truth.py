@@ -207,7 +207,7 @@ def run_benchmark_suite() -> Dict[str, Any]:
         takedown_pkg["infringing_count"] == 1
         and "17 U.S.C. § 512(c)" in takedown_pkg["notice_text"]
         and len(takedown_pkg["merkle_root"]) == 64
-        and takedown_pkg["signature"]["algorithm"] == "Ed25519"
+        and takedown_pkg["signature"]["algorithm"] in ("Ed25519", "ECDSA_P256")
     )
     results.append({
         "id": "TC-06-SELLER-TAKEDOWN",

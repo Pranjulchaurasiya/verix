@@ -16,7 +16,8 @@ import hashlib
 from typing import Dict, Any, Optional
 
 try:
-    from cryptography.hazmat.primitives.asymmetric import ed25519
+    from cryptography.hazmat.primitives.asymmetric import ed25519, ec
+    from cryptography.hazmat.primitives import hashes, serialization
     from cryptography.exceptions import InvalidSignature
 except ImportError:
     print("[ERROR] 'cryptography' library is required. Install via: pip install cryptography", file=sys.stderr)
@@ -54,16 +55,29 @@ def verify_merkle_proof(leaf_data: Any, proof: list, expected_root: str) -> bool
 
 
 def verify_ed25519_signature(public_key_hex: str, signature_hex: str, manifest: Dict[str, Any]) -> bool:
-    """Verifies Ed25519 signature over canonical manifest payload."""
+    """Verifies Ed25519 or ECDSA P-256 signature over canonical manifest payload."""
+    canonical_bytes = canonical_json(manifest)
+    # 1. Try Ed25519
     try:
         pub_bytes = bytes.fromhex(public_key_hex)
         sig_bytes = bytes.fromhex(signature_hex)
         pub_key = ed25519.Ed25519PublicKey.from_public_bytes(pub_bytes)
-        canonical_bytes = canonical_json(manifest)
         pub_key.verify(sig_bytes, canonical_bytes)
         return True
-    except (ValueError, InvalidSignature, Exception):
-        return False
+    except Exception:
+        pass
+
+    # 2. Try ECDSA NIST P-256 (KMS DER public key)
+    try:
+        pub_bytes = bytes.fromhex(public_key_hex)
+        sig_bytes = bytes.fromhex(signature_hex)
+        pub_key = serialization.load_der_public_key(pub_bytes)
+        pub_key.verify(sig_bytes, canonical_bytes, ec.ECDSA(hashes.SHA256()))
+        return True
+    except Exception:
+        pass
+
+    return False
 
 
 def verify_dossier(dossier_path: str, public_key_override: Optional[str] = None, verbose: bool = False) -> Dict[str, Any]:

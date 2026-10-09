@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import type { CheckResult, Persona, BatchScanResponse } from "@/lib/types"
 import { scanProduct, scanBatch } from "@/lib/scan-service"
 import { addCheck } from "@/lib/history-store"
+import { analyzeImage } from "@/lib/mock-engine"
 import { PersonaToggle } from "@/components/persona-toggle"
 import { CheckForm, type SubmitPayload } from "@/components/check-form"
 import { ResultView } from "@/components/result-view"
@@ -38,6 +39,20 @@ export function CheckExperience() {
   const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get("demo") === "1" || params.get("sample")) {
+        const sampleSeed = params.get("sample") || "example-sneaker"
+        const mockRes = analyzeImage({
+          persona: "buyer",
+          inputType: "url",
+          imageUrl: "/demo/sneaker.png",
+          seed: sampleSeed,
+        })
+        setResult(mockRes)
+        setPhase("done")
+      }
+    }
     return () => timers.current.forEach(clearTimeout)
   }, [])
 

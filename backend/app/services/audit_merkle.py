@@ -57,6 +57,9 @@ class LocalEd25519Signer(BaseSigner):
     def get_key_id(self) -> str:
         return self.key_id
 
+    def get_algorithm(self) -> str:
+        return "Ed25519"
+
 
 class CloudKMSSigner(BaseSigner):
     """
@@ -65,8 +68,8 @@ class CloudKMSSigner(BaseSigner):
     Private keys are never stored in or accessed by application memory.
     """
     def __init__(self, key_id: Optional[str] = None, region: Optional[str] = None):
-        self.key_id = key_id or settings.KMS_KEY_ID or "arn:aws:kms:us-east-1:123456789012:key/verix-ed25519-hsm"
-        self.region = region or settings.KMS_REGION or "us-east-1"
+        self.key_id = key_id or settings.KMS_KEY_ID or "alias/verix-evidence-signer"
+        self.region = region or settings.KMS_REGION or "ap-south-1"
         self._local_fallback = LocalEd25519Signer(key_id=f"kms-backed-{self.key_id.split('/')[-1]}")
         self._client = None
         try:
@@ -76,21 +79,29 @@ class CloudKMSSigner(BaseSigner):
             self._client = None
 
     def sign(self, message: bytes) -> bytes:
-        if self._client and settings.KMS_KEY_ID:
+        if self._client and (settings.KMS_KEY_ID or self.key_id):
             try:
-                resp = self._client.sign(
-                    KeyId=self.key_id,
-                    Message=message,
-                    MessageType="RAW",
-                    SigningAlgorithm="ED25519_RAW"
-                )
+                try:
+                    resp = self._client.sign(
+                        KeyId=self.key_id,
+                        Message=message,
+                        MessageType="RAW",
+                        SigningAlgorithm="ECDSA_SHA_256"
+                    )
+                except Exception:
+                    resp = self._client.sign(
+                        KeyId=self.key_id,
+                        Message=message,
+                        MessageType="RAW",
+                        SigningAlgorithm="ED25519_RAW"
+                    )
                 return resp["Signature"]
             except Exception:
                 return self._local_fallback.sign(message)
         return self._local_fallback.sign(message)
 
     def get_public_key_hex(self) -> str:
-        if self._client and settings.KMS_KEY_ID:
+        if self._client and (settings.KMS_KEY_ID or self.key_id):
             try:
                 resp = self._client.get_public_key(KeyId=self.key_id)
                 return resp["PublicKey"].hex()
@@ -100,6 +111,9 @@ class CloudKMSSigner(BaseSigner):
 
     def get_key_id(self) -> str:
         return self.key_id
+
+    def get_algorithm(self) -> str:
+        return "ECDSA_P256" if (self._client and (settings.KMS_KEY_ID or self.key_id)) else "Ed25519"
 
 
 def get_signer() -> BaseSigner:
@@ -203,9 +217,10 @@ def sign_audit_manifest(manifest_payload: Dict[str, Any]) -> Dict[str, Any]:
     signer = get_signer()
     canonical_bytes = canonical_json(manifest_payload)
     signature = signer.sign(canonical_bytes)
+    algo = getattr(signer, "get_algorithm", lambda: "Ed25519")()
     return {
         "key_id": signer.get_key_id(),
-        "algorithm": "Ed25519",
+        "algorithm": algo,
         "public_key_hex": signer.get_public_key_hex(),
         "signature_hex": signature.hex(),
         "signature_b64": base64.b64encode(signature).decode("ascii"),
@@ -214,13 +229,46 @@ def sign_audit_manifest(manifest_payload: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def verify_signature(public_key_hex: str, signature_hex: str, manifest_payload: Dict[str, Any]) -> bool:
-    """Verifies that manifest_payload was signed by the Ed25519 key."""
+    """Verifies that manifest_payload was signed by the key (supports Ed25519 & ECDSA P-256)."""
+    canonical_bytes = canonical_json(manifest_payload)
+    
+    # 1. Try Ed25519 verification
     try:
         pub_bytes = bytes.fromhex(public_key_hex)
         sig_bytes = bytes.fromhex(signature_hex)
         pub_key = ed25519.Ed25519PublicKey.from_public_bytes(pub_bytes)
-        canonical_bytes = canonical_json(manifest_payload)
         pub_key.verify(sig_bytes, canonical_bytes)
         return True
-    except (ValueError, InvalidSignature, Exception):
-        return False
+    except Exception:
+        pass
+
+    # 2. Try ECDSA NIST P-256 (KMS DER public key)
+    try:
+        from cryptography.hazmat.primitives.asymmetric import ec
+        from cryptography.hazmat.primitives import hashes
+        pub_bytes = bytes.fromhex(public_key_hex)
+        sig_bytes = bytes.fromhex(signature_hex)
+        pub_key = serialization.load_der_public_key(pub_bytes)
+        pub_key.verify(sig_bytes, canonical_bytes, ec.ECDSA(hashes.SHA256()))
+        return True
+    except Exception:
+        pass
+
+    # 3. Direct AWS KMS verification fallback if KMS is enabled
+    if getattr(settings, "USE_CLOUD_KMS", False):
+        try:
+            import boto3
+            kms = boto3.client("kms", region_name=getattr(settings, "KMS_REGION", "ap-south-1"))
+            resp = kms.verify(
+                KeyId=getattr(settings, "KMS_KEY_ID", "alias/verix-evidence-signer"),
+                Message=canonical_bytes,
+                MessageType="RAW",
+                Signature=bytes.fromhex(signature_hex),
+                SigningAlgorithm="ECDSA_SHA_256"
+            )
+            return resp.get("SignatureValid", False)
+        except Exception:
+            pass
+
+    return False
+

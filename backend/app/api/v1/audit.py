@@ -14,7 +14,7 @@ from sqlalchemy import select
 from backend.app.database import get_db
 from backend.app.models.scan import ScanRecord
 from backend.app.services.audit_merkle import (
-    KEY_ID, MerkleTree, get_public_key_hex, sign_audit_manifest, verify_signature
+    KEY_ID, MerkleTree, get_public_key_hex, sign_audit_manifest, verify_signature, get_signer
 )
 
 router = APIRouter(prefix="/audit", tags=["audit"])
@@ -41,19 +41,21 @@ class VerificationResponse(BaseModel):
 @router.get("/keys")
 async def get_audit_public_keys():
     """Returns the active public keys used to anchor and sign Verix evidence dossiers."""
+    signer = get_signer()
+    algo = getattr(signer, "get_algorithm", lambda: "Ed25519")()
     return {
         "keys": [
             {
-                "key_id": KEY_ID,
-                "algorithm": "Ed25519",
-                "public_key_hex": get_public_key_hex(),
+                "key_id": signer.get_key_id(),
+                "algorithm": algo,
+                "public_key_hex": signer.get_public_key_hex(),
                 "status": "active",
                 "usage": "evidence_integrity_and_non_repudiation"
             }
         ],
-        "rfc_standard": "RFC 8032 (Ed25519)",
+        "rfc_standard": "RFC 8032 (Ed25519)" if algo == "Ed25519" else "FIPS 186-4 (ECDSA P-256 Cloud KMS)",
         "hash_function": "SHA-256",
-        "verification_guide": "Dossiers signed by Verix can be verified against this public key using any RFC 8032 compliant client or POST /api/v1/audit/verify."
+        "verification_guide": "Dossiers signed by Verix can be verified against this public key using standard cryptographic verification or POST /api/v1/audit/verify."
     }
 
 
