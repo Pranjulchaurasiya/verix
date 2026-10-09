@@ -55,7 +55,19 @@ export async function scanProduct(payload: SubmitPayload, persona: Persona, mode
   const timeout = setTimeout(() => controller.abort(), 60000)
   try {
     const response = await scopedApiFetch("/api/v1/analyze", {method:"POST",body,signal:controller.signal})
-    if (!response.ok) throw new Error(response.status === 429 ? "Too many requests. Wait a moment and retry." : response.status === 503 ? "Search is unavailable and no cached evidence was returned. Retry or select Demo mode." : `Scan failed (${response.status}). Check your input and retry.`)
+    if (!response.ok) {
+      let detailMsg = ""
+      try {
+        const errJson = await response.json()
+        detailMsg = errJson.detail || ""
+      } catch {}
+      throw new Error(
+        detailMsg ||
+        (response.status === 429 ? "Too many requests. Wait a moment and retry." :
+         response.status === 503 ? "Search is unavailable and no cached evidence was returned. Retry or select Demo mode." :
+         `Scan failed (${response.status}). Check your input and retry.`)
+      )
+    }
     return mapScanResponse(await response.json(),payload,persona)
   } catch (error) {
     if (controller.signal.aborted) throw new Error("The scan timed out after 60 seconds. Retry or try the demo example.")

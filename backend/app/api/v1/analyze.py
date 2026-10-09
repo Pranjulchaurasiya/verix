@@ -87,9 +87,8 @@ async def analyze_product(
     """
     telemetry.record_request()
 
-    if settings.ENVIRONMENT.lower() == "production" and not x_client_id:
-        raise HTTPException(status_code=400, detail="X-Client-Id is required for private scan history.")
-    client_scope_hash = hashlib.sha256((x_client_id or "development-anonymous").encode()).hexdigest()
+    effective_client_id = x_client_id or f"client-anon-{uuid.uuid4().hex[:16]}"
+    client_scope_hash = hashlib.sha256(effective_client_id.encode()).hexdigest()
     
     if persona_mode not in ["buyer", "seller"]:
         persona_mode = "buyer"

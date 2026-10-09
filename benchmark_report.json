@@ -1,16 +1,16 @@
 {
-  "benchmark_timestamp": "2026-10-09T13:59:43.904096+00:00",
+  "benchmark_timestamp": "2026-10-09T14:15:40.189797+00:00",
   "total_tests": 7,
   "passed_tests": 7,
   "pass_rate_pct": 100.0,
-  "mean_latency_ms": 400.47,
+  "mean_latency_ms": 633.02,
   "invariants_violated": 0,
   "test_results": [
     {
       "id": "TC-01-WHITELIST",
       "name": "Platform Whitelist Precision & Registry Integrity",
       "passed": true,
-      "latency_ms": 0.16,
+      "latency_ms": 0.2,
       "details": "Tested 3 trusted and 2 untrusted domains."
     },
     {
@@ -24,35 +24,35 @@
       "id": "TC-03-AI-PROVENANCE",
       "name": "Synthetic AI Generator Signatures & C2PA Provenance Detection",
       "passed": true,
-      "latency_ms": 106.54,
+      "latency_ms": 248.47,
       "details": "Detected generators: ['ComfyUI', 'Midjourney'], C2PA: True"
     },
     {
       "id": "TC-04-CRYPTO-MERKLE",
       "name": "RFC 8032 Ed25519 Signing & Merkle Inclusion Proof Integrity",
       "passed": true,
-      "latency_ms": 1812.8,
+      "latency_ms": 3050.36,
       "details": "Root: d0d78e4044eeef60..., Sig Valid: True, Proofs Valid: True"
     },
     {
       "id": "TC-05-CLI-VERIFIER",
       "name": "Third-Party Offline CLI Evidence Verification",
       "passed": true,
-      "latency_ms": 20.71,
+      "latency_ms": 33.73,
       "details": "CLI Verification Pass: True, Leaves Verified: 4"
     },
     {
       "id": "TC-06-SELLER-TAKEDOWN",
       "name": "Seller Asset Protection & Statutory DMCA/VeRO Notice Compilation",
       "passed": true,
-      "latency_ms": 862.57,
+      "latency_ms": 1097.75,
       "details": "Notice Case ID: VERIX-BENCH-SC, Infringing Count: 1"
     },
     {
       "id": "TC-07-WEBHOOKS",
       "name": "Enterprise Webhook HMAC-SHA256 Signatures & Replay Prevention",
       "passed": true,
-      "latency_ms": 0.15,
+      "latency_ms": 0.23,
       "details": "Signature Valid: True, Tamper Rejected: True, Replay Prevented: True"
     }
   ]
