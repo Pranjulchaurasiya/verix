@@ -90,3 +90,29 @@ async def test_audit_verify_endpoint():
         assert data["verified"] is True
         assert data["signature_valid"] is True
         assert data["merkle_proof_valid"] is True
+
+
+def test_cloud_kms_signer_interface_and_verification():
+    from backend.app.services.audit_merkle import CloudKMSSigner, get_signer
+    from backend.app.config import settings
+
+    # Test KMS Signer initialization & interface
+    kms_signer = CloudKMSSigner(key_id="arn:aws:kms:us-east-1:123456789012:key/verix-hsm", region="us-east-1")
+    assert kms_signer.get_key_id() == "arn:aws:kms:us-east-1:123456789012:key/verix-hsm"
+    pub_hex = kms_signer.get_public_key_hex()
+    assert len(pub_hex) == 64
+
+    # Sign payload
+    manifest = {"scan_id": "kms-test-01", "merkle_root": "aaaabbbbccccdddd"}
+    sig_bytes = kms_signer.sign(canonical_json(manifest))
+    assert len(sig_bytes) == 64
+
+    # Signature must verify successfully
+    assert verify_signature(pub_hex, sig_bytes.hex(), manifest) is True
+
+    # Test factory toggle
+    settings.USE_CLOUD_KMS = True
+    active = get_signer()
+    assert isinstance(active, CloudKMSSigner)
+    settings.USE_CLOUD_KMS = False
+
