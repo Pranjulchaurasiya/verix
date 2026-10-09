@@ -73,10 +73,6 @@ jobs:
         working-directory: frontend
         run: pnpm install --frozen-lockfile
 
-      - name: TypeScript Type Checking
-        working-directory: frontend
-        run: pnpm exec tsc --noEmit
-
-      - name: Next.js Production Static Build
+      - name: Next.js Production Static Build & Type Check
         working-directory: frontend
         run: pnpm build
