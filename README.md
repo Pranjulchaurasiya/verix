@@ -361,6 +361,48 @@ verix/
 
 ---
 
+## Frequently Asked Questions (FAQ)
+
+<details>
+<summary><b>1. Why does Verix use deterministic mathematical scoring instead of an LLM?</b></summary>
+<br/>
+
+Large Language Models (LLMs) are prone to non-deterministic outputs and hallucinations, which are unacceptable when evaluating potential fraud or legal IP disputes. Verix uses **100% deterministic mathematical boundaries** (statistical IQR pricing fences, distinct domain counts, and perceptual image hashing) to ensure that the exact same evidence always yields the exact same auditable score.
+</details>
+
+<details>
+<summary><b>2. What makes the Verix evidence dossier tamper-evident?</b></summary>
+<br/>
+
+Every harvested match, timestamp, and price point is canonicalized under **RFC 8785 (JCS)**, hashed into a **Binary Merkle Tree**, and digitally signed using **RFC 8032 Ed25519**. Third parties can download any dossier `.json` and verify its inclusion proofs and digital signature completely offline using `verify_evidence_cli.py` without trusting or querying the Verix server.
+</details>
+
+<details>
+<summary><b>3. How does Verix minimize SerpApi API costs and latency?</b></summary>
+<br/>
+
+Verix implements a multi-tier caching strategy:
+- **Perceptual & Cryptographic Hash Indexing**: Images are indexed by 64-bit dHash and SHA-256, allowing instant cache hits for previously analyzed images.
+- **Fail-Closed Early Exit**: If fewer than 2 distinct merchant domains are detected, the system safely exits without triggering secondary deep queries.
+- **24-Hour Evidence TTL**: High-confidence marketplace visual matches are cached to deliver sub-millisecond responses for repeat investigations.
+</details>
+
+<details>
+<summary><b>4. How does Verix protect against defamation and false accusations?</b></summary>
+<br/>
+
+Verix enforces a strict **Non-Accusatory Policy**. The engine never outputs defamatory words like *"scam"*, *"fraudster"*, or *"criminal"*. Instead, all verdicts are framed objectively based on measurable facts (e.g., *"unverified merchant domain"*, *"image appears across multiple third-party marketplaces"*, *"pricing anomaly detected: 84% below median retail"*).
+</details>
+
+<details>
+<summary><b>5. How is Server-Side Request Forgery (SSRF) prevented during URL extraction?</b></summary>
+<br/>
+
+When a user submits a storefront URL, the ingestion firewall resolves the domain's IP addresses prior to making any HTTP request. It strictly rejects private IP ranges (RFC 1918), loopback addresses (127.0.0.1/::1), and cloud metadata endpoints (169.254.169.254). Redirects are independently re-validated at every hop, and responses are inspected for valid image magic bytes.
+</details>
+
+---
+
 ## License
 
 Distributed under the **MIT License**. See [`LICENSE`](file:///c:/Users/pranj/Documents/Verix/LICENSE) for more information.
