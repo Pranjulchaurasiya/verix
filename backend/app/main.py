@@ -52,10 +52,15 @@ app = FastAPI(
 )
 
 # CORS Middleware
-cors_origins = ["*"] if settings.ENVIRONMENT.lower() == "development" else settings.ALLOWED_ORIGINS
+allow_all = (
+    settings.ENVIRONMENT.lower() == "development"
+    or "*" in settings.ALLOWED_ORIGINS
+)
+cors_origins = ["*"] if allow_all else settings.ALLOWED_ORIGINS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app" if not allow_all else None,
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],

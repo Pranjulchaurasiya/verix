@@ -1,8 +1,8 @@
 # Verix Invariant & Ground-Truth Benchmark Report
 
-**Benchmark Generated:** 2026-10-08T23:46:57.478636+00:00  
+**Benchmark Generated:** 2026-10-09T00:24:25.636032+00:00  
 **Evaluation Pass Rate:** **100.0%** (7/7 Scenarios Passed)  
-**Mean Execution Latency:** **10.86 ms**  
+**Mean Execution Latency:** **39.32 ms**  
 **Invariant Violations:** **0**
 
 ---
@@ -12,12 +12,12 @@
 | ID | Evaluation Scope | Status | Latency | Key Assertion |
 |---|---|---|---|---|
 | `TC-01-WHITELIST` | Platform Whitelist Precision & Registry Integrity | **PASS** | 0.1 ms | Tested 3 trusted and 2 untrusted domains. |
-| `TC-02-PRICING-ANOMALY` | Multi-Retailer Pricing Dispersion & Bait-and-Switch Counterfeit Detection | **PASS** | 0.19 ms | Median: $120.0 USD, Outliers Detected: 1 |
-| `TC-03-AI-PROVENANCE` | Synthetic AI Generator Signatures & C2PA Provenance Detection | **PASS** | 58.73 ms | Detected generators: ['ComfyUI', 'Midjourney'], C2PA: True |
-| `TC-04-CRYPTO-MERKLE` | RFC 8032 Ed25519 Signing & Merkle Inclusion Proof Integrity | **PASS** | 0.57 ms | Root: d0d78e4044eeef60..., Sig Valid: True, Proofs Valid: True |
-| `TC-05-CLI-VERIFIER` | Third-Party Offline CLI Evidence Verification | **PASS** | 16.16 ms | CLI Verification Pass: True, Leaves Verified: 4 |
-| `TC-06-SELLER-TAKEDOWN` | Seller Asset Protection & Statutory DMCA/VeRO Notice Compilation | **PASS** | 0.21 ms | Notice Case ID: VERIX-BENCH-SC, Infringing Count: 1 |
-| `TC-07-WEBHOOKS` | Enterprise Webhook HMAC-SHA256 Signatures & Replay Prevention | **PASS** | 0.07 ms | Signature Valid: True, Tamper Rejected: True, Replay Prevented: True |
+| `TC-02-PRICING-ANOMALY` | Multi-Retailer Pricing Dispersion & Bait-and-Switch Counterfeit Detection | **PASS** | 0.26 ms | Median: $120.0 USD, Outliers Detected: 1 |
+| `TC-03-AI-PROVENANCE` | Synthetic AI Generator Signatures & C2PA Provenance Detection | **PASS** | 246.5 ms | Detected generators: ['ComfyUI', 'Midjourney'], C2PA: True |
+| `TC-04-CRYPTO-MERKLE` | RFC 8032 Ed25519 Signing & Merkle Inclusion Proof Integrity | **PASS** | 1.16 ms | Root: d0d78e4044eeef60..., Sig Valid: True, Proofs Valid: True |
+| `TC-05-CLI-VERIFIER` | Third-Party Offline CLI Evidence Verification | **PASS** | 26.72 ms | CLI Verification Pass: True, Leaves Verified: 4 |
+| `TC-06-SELLER-TAKEDOWN` | Seller Asset Protection & Statutory DMCA/VeRO Notice Compilation | **PASS** | 0.36 ms | Notice Case ID: VERIX-BENCH-SC, Infringing Count: 1 |
+| `TC-07-WEBHOOKS` | Enterprise Webhook HMAC-SHA256 Signatures & Replay Prevention | **PASS** | 0.11 ms | Signature Valid: True, Tamper Rejected: True, Replay Prevented: True |
 
 ---
 

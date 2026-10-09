@@ -2,8 +2,9 @@
 
 from typing import List, Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import Field
+from pydantic import Field, field_validator
 import os
+import json
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Verix"
@@ -57,6 +58,21 @@ class Settings(BaseSettings):
         "http://127.0.0.1:8000",
         "http://0.0.0.0:3000"
     ]
+
+    @field_validator("ALLOWED_ORIGINS", mode="before")
+    @classmethod
+    def parse_allowed_origins(cls, v):
+        if isinstance(v, str):
+            v = v.strip()
+            if v.startswith("[") and v.endswith("]"):
+                try:
+                    return json.loads(v)
+                except Exception:
+                    pass
+            if "," in v:
+                return [origin.strip() for origin in v.split(",") if origin.strip()]
+            return [v]
+        return v
     
     # Storage
     UPLOAD_DIR: str = os.path.join(os.getcwd(), "uploads")
