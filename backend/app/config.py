@@ -51,6 +51,12 @@ class Settings(BaseSettings):
     ADMIN_API_KEY: Optional[str] = None
     MEDIA_SIGNING_KEY: Optional[str] = "verix-dev-media-signing-key-2026"
     AUTH_SECRET: Optional[str] = "verix-audit-secret-2026"
+    
+    # Enterprise Cloud KMS & Distributed Redis Caching
+    USE_CLOUD_KMS: bool = False
+    KMS_KEY_ID: Optional[str] = None
+    KMS_REGION: str = "us-east-1"
+    REDIS_URL: Optional[str] = None
     ALLOWED_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",

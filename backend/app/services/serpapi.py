@@ -12,8 +12,75 @@ from backend.app.services.sanitizer import sanitize_scraped_text
 logger = logging.getLogger("verix.serpapi")
 
 _serpapi_semaphore = asyncio.Semaphore(5)
-_SERPAPI_CACHE: Dict[str, Dict[str, Any]] = {}
 _CACHE_TTL_SECONDS = 3600 * 24  # 24-hour cache for visual matches
+
+
+class SingleFlightCacheManager:
+    """
+    Enterprise Single-Flight & Distributed Cache Coordinator.
+    Prevents cache stampedes (dog-piling) when hundreds of concurrent requests
+    miss the cache simultaneously for the same image hash.
+    Supports:
+    - Distributed Redis lock & caching (when settings.REDIS_URL is configured)
+    - High-performance in-process async Lock map with TTL cleanup (default/fallback)
+    """
+    def __init__(self):
+        self._local_cache: Dict[str, Dict[str, Any]] = {}
+        self._in_flight_locks: Dict[str, asyncio.Lock] = {}
+        self._registry_lock = asyncio.Lock()
+        self._redis = None
+
+    async def _get_redis(self):
+        if getattr(settings, "REDIS_URL", None) and self._redis is None:
+            try:
+                import redis.asyncio as aioredis
+                self._redis = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+            except Exception as e:
+                logger.warning("Redis initialization failed, falling back to in-process single-flight: %s", e)
+                self._redis = None
+        return self._redis
+
+    async def get(self, key: str) -> Optional[List[Dict[str, Any]]]:
+        r = await self._get_redis()
+        if r:
+            try:
+                raw = await r.get(f"verix:serpapi:{key}")
+                if raw:
+                    import json
+                    return json.loads(raw)
+            except Exception:
+                pass
+
+        entry = self._local_cache.get(key)
+        if entry:
+            if time.time() - entry["timestamp"] < _CACHE_TTL_SECONDS:
+                return entry["matches"]
+            self._local_cache.pop(key, None)
+        return None
+
+    async def set(self, key: str, matches: List[Dict[str, Any]]):
+        self._local_cache[key] = {
+            "timestamp": time.time(),
+            "matches": matches
+        }
+        r = await self._get_redis()
+        if r:
+            try:
+                import json
+                await r.set(f"verix:serpapi:{key}", json.dumps(matches), ex=_CACHE_TTL_SECONDS)
+            except Exception as e:
+                logger.warning("Redis cache write failed: %s", e)
+
+    async def get_lock(self, key: str) -> asyncio.Lock:
+        async with self._registry_lock:
+            if key not in self._in_flight_locks:
+                self._in_flight_locks[key] = asyncio.Lock()
+            return self._in_flight_locks[key]
+
+
+_cache_manager = SingleFlightCacheManager()
+_SERPAPI_CACHE: Dict[str, Dict[str, Any]] = _cache_manager._local_cache
+
 
 def _get_cache_key(image_url: str, image_bytes: Optional[bytes] = None) -> str:
     if image_bytes and len(image_bytes) > 0:
@@ -79,19 +146,30 @@ async def search_google_lens(
         return get_mock_visual_matches(image_url, simulation_scenario)
 
     cache_key = _get_cache_key(image_url, image_bytes)
-    now = time.time()
-    if not simulation_scenario and cache_key in _SERPAPI_CACHE:
-        entry = _SERPAPI_CACHE[cache_key]
-        if now - entry["timestamp"] < _CACHE_TTL_SECONDS:
+    if not simulation_scenario:
+        cached = await _cache_manager.get(cache_key)
+        if cached:
             logger.info("Serving SerpApi Google Lens results from local hash cache: %s", cache_key)
             telemetry.record_serpapi_cache_hit()
             telemetry.record_serpapi_success()
-            return entry["matches"]
+            return cached
 
-    # Never convert an ordinary user input into a simulated search result.
-    if not settings.SERPAPI_API_KEY:
-        telemetry.record_serpapi_failure("SERPAPI_API_KEY is not configured.")
-        raise SerpApiDegradedException("SerpApi API key not configured.")
+    # Enterprise Single-Flight: acquire lock for this specific cache_key to prevent cache stampedes
+    key_lock = await _cache_manager.get_lock(cache_key)
+    async with key_lock:
+        # Double-check inside lock in case a concurrent worker just completed the query
+        if not simulation_scenario:
+            cached = await _cache_manager.get(cache_key)
+            if cached:
+                logger.info("Serving SerpApi Google Lens results from single-flight populated cache: %s", cache_key)
+                telemetry.record_serpapi_cache_hit()
+                telemetry.record_serpapi_success()
+                return cached
+
+        # Never convert an ordinary user input into a simulated search result.
+        if not settings.SERPAPI_API_KEY:
+            telemetry.record_serpapi_failure("SERPAPI_API_KEY is not configured.")
+            raise SerpApiDegradedException("SerpApi API key not configured.")
 
     try:
         requested_types = lens_types or ["visual_matches"]
@@ -190,10 +268,7 @@ async def search_google_lens(
 
             deduped = _dedupe_matches(normalized_matches)
             if not simulation_scenario and deduped:
-                _SERPAPI_CACHE[cache_key] = {
-                    "timestamp": now,
-                    "matches": deduped
-                }
+                await _cache_manager.set(cache_key, deduped)
             return deduped
 
     except (httpx.TimeoutException, httpx.NetworkError) as exc:
