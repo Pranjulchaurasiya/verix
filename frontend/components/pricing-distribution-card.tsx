@@ -25,6 +25,20 @@ export function PricingDistributionCard({ pricingAnalysis }: PricingDistribution
     priced_listings = []
   } = pricingAnalysis
 
+  const currSym = pricingAnalysis.currency_symbol || "$"
+  const currCode = pricingAnalysis.display_currency || "USD"
+  const isINR = currCode === "INR"
+
+  const formatPrice = (val?: number | null) => {
+    if (val === undefined || val === null) return "—"
+    return `${currSym}${Number(val).toLocaleString()}`
+  }
+
+  const medianDisp = pricingAnalysis.median_display ?? median_usd
+  const iqrDisp = pricingAnalysis.iqr_display ?? iqr_usd
+  const lowerDisp = pricingAnalysis.lower_bound_display ?? lower_bound_usd
+  const upperDisp = pricingAnalysis.upper_bound_display ?? upper_bound_usd
+
   return (
     <section className="rounded-xl border border-border bg-card p-4 space-y-3" aria-label="Pricing Distribution">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -55,25 +69,28 @@ export function PricingDistributionCard({ pricingAnalysis }: PricingDistribution
         <div className="rounded-lg border border-border bg-muted/40 p-2.5">
           <span className="text-muted-foreground">Market Median</span>
           <p className="mt-0.5 text-base font-bold text-foreground font-mono">
-            ${median_usd ?? "—"} <span className="text-[10px] font-normal text-muted-foreground">USD</span>
+            {formatPrice(medianDisp)} <span className="text-[10px] font-normal text-muted-foreground">{currCode}</span>
           </p>
+          {isINR && median_usd && (
+            <span className="text-[10px] font-mono text-muted-foreground/80">(${median_usd} USD)</span>
+          )}
         </div>
         <div className="rounded-lg border border-border bg-muted/40 p-2.5">
           <span className="text-muted-foreground">Interquartile Range (IQR)</span>
           <p className="mt-0.5 text-base font-bold text-foreground font-mono">
-            ${iqr_usd ?? "—"}
+            {formatPrice(iqrDisp)}
           </p>
         </div>
         <div className="rounded-lg border border-border bg-muted/40 p-2.5">
           <span className="text-muted-foreground">Lower Fence (IQR - 1.5)</span>
           <p className="mt-0.5 text-base font-bold text-foreground font-mono">
-            ${lower_bound_usd ?? "—"}
+            {formatPrice(lowerDisp)}
           </p>
         </div>
         <div className="rounded-lg border border-border bg-muted/40 p-2.5">
           <span className="text-muted-foreground">Upper Fence (IQR + 1.5)</span>
           <p className="mt-0.5 text-base font-bold text-foreground font-mono">
-            ${upper_bound_usd ?? "—"}
+            {formatPrice(upperDisp)}
           </p>
         </div>
       </div>
@@ -110,7 +127,16 @@ export function PricingDistributionCard({ pricingAnalysis }: PricingDistribution
                   )}
                 </div>
                 <div className="text-right font-mono text-xs">
-                  <span className="font-bold">${p.usd_price} USD</span>
+                  <span className="font-bold">
+                    {p.display_price !== undefined
+                      ? `${currSym}${Number(p.display_price).toLocaleString()} ${currCode}`
+                      : `$${p.usd_price} USD`}
+                  </span>
+                  {isINR && p.usd_price && (
+                    <span className="ml-1 text-[10px] text-muted-foreground font-normal">
+                      (${p.usd_price})
+                    </span>
+                  )}
                   {p.modified_z_score !== undefined && (
                     <span className="ml-2 text-[10px] text-muted-foreground">
                       Z: {p.modified_z_score > 0 ? `+${p.modified_z_score}` : p.modified_z_score}

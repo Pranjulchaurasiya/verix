@@ -238,10 +238,13 @@ async def analyze_product(
                 detail=f"SerpApi reverse image service is currently degraded or rate limited, and no cached scan exists for this image. {str(exc)}"
             )
 
-    # -------------------------------------------------------------
-    # MULTI-RETAILER PRICING DISPERSION & OUTLIER DETECTION
-    # -------------------------------------------------------------
-    pricing_stats = analyze_price_distribution(matches)
+    preferred_curr = "INR" if (
+        settings.SERPAPI_COUNTRY.lower() == "in"
+        or (matched_wl_domain and any(dom in matched_wl_domain for dom in ["amazon.in", "flipkart", "myntra", "ajio", "meesho", "nykaa", "tatacliq", "croma", "reliancedigital", "jiomart"]))
+        or (url and any(dom in url.lower() for dom in [".in/", ".in?", "amazon.in", "flipkart", "myntra", "ajio", "meesho", "nykaa"]))
+        or any(m.get("currency") in ["INR", "₹"] for m in matches)
+    ) else "USD"
+    pricing_stats = analyze_price_distribution(matches, preferred_currency=preferred_curr)
 
     # -------------------------------------------------------------
     # GUARDRAIL 6: EMPTY / NOISE GUARDRAIL (< 2 MATCHES)
