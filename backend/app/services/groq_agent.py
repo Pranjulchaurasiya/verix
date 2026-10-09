@@ -367,13 +367,25 @@ def evaluate_authenticity_heuristic(
         else:
             if target_is_wl:
                 target_dom = target_wl_name or "recognized marketplace"
-                explanation = (
-                    f"The submitted listing is on a recognized, consumer-protected marketplace ({target_dom}). "
-                    f"Corroborating public catalog references were identified across {len(matches)} listings. "
-                    "Commercial catalog photography is standard across authorized retail distributors; "
-                    "verify the specific seller's store rating and return policy before completing your purchase."
-                )
-                action_rec = "Platform buyer protection applies. Review the seller rating and return window before purchasing."
+                is_direct_brand_store = any(dom in target_dom.lower() for dom in [
+                    "boat-lifestyle.com", "apple.com", "nike.com", "adidas", "samsung.com",
+                    "sony.com", "sony.co.in", "zara.com", "hm.com", "uniqlo.com", "puma.com"
+                ])
+                if is_direct_brand_store:
+                    explanation = (
+                        f"The submitted listing is hosted on the official direct brand flagship store ({target_dom}). "
+                        f"Corroborating public catalog references were identified across {len(matches)} listings. "
+                        "As the authorized manufacturer and primary rights-holder, direct purchases carry official warranty and authenticity guarantees."
+                    )
+                    action_rec = f"Official brand flagship ({target_dom}). Direct manufacturer purchase with standard brand warranty."
+                else:
+                    explanation = (
+                        f"The submitted listing is on a recognized, consumer-protected marketplace ({target_dom}). "
+                        f"Corroborating public catalog references were identified across {len(matches)} listings. "
+                        "Commercial catalog photography is standard across authorized retail distributors; "
+                        "verify the specific seller's store rating and return policy before completing your purchase."
+                    )
+                    action_rec = "Platform buyer protection applies. Review the seller rating and return window before purchasing."
             elif distinct_wl:
                 wl_str = ", ".join(distinct_wl[:3])
                 explanation = (
