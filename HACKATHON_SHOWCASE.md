@@ -14,9 +14,9 @@ Built across **10 iterative engineering sprints**, Verix solves the three core b
 3. **Legal & Third-Party Verifiability:** Anchored every scraped match into a **FIPS 186-4 Hardware-Backed AWS Cloud KMS (HSM) ECDSA P-256** signature and binary **Merkle tree** (with RFC 8032 Ed25519 fallback), verified offline with zero server dependencies via `verify_evidence_cli.py`.
 
 > 🌐 **Live Production Deployment**:
-> * **Backend API**: [https://verix-t4a1.onrender.com](https://verix-t4a1.onrender.com)
-> * **Interactive API Docs (Swagger)**: [https://verix-t4a1.onrender.com/docs](https://verix-t4a1.onrender.com/docs)
-> * **Live Hardware KMS Public Key Registry**: [https://verix-t4a1.onrender.com/api/v1/audit/keys](https://verix-t4a1.onrender.com/api/v1/audit/keys)
+> * **Backend API**: [https://verix-x247.onrender.com](https://verix-x247.onrender.com)
+> * **Interactive API Docs (Swagger)**: [https://verix-x247.onrender.com/docs](https://verix-x247.onrender.com/docs)
+> * **Live Hardware KMS Public Key Registry**: [https://verix-x247.onrender.com/api/v1/audit/keys](https://verix-x247.onrender.com/api/v1/audit/keys)
 
 ---
 

@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://verix-t4a1.onrender.com/api/:match*"
+      "destination": "https://verix-x247.onrender.com/api/:match*"
     }
   ]
 }

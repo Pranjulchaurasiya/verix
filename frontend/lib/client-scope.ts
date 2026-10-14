@@ -27,14 +27,14 @@ export function getApiBaseUrl(): string {
       base = `${window.location.protocol}//${window.location.hostname}:8000`
     } else if (window.location.hostname.endsWith("vercel.app") || window.location.hostname.includes("verix")) {
       // In Vercel standalone frontend deployment, route directly to the live Render FastAPI backend
-      base = "https://verix-t4a1.onrender.com"
+      base = "https://verix-x247.onrender.com"
     } else {
       // In production unified deployment, the API is served from the same origin
       base = window.location.origin
     }
   }
   if (!base) {
-    base = "https://verix-t4a1.onrender.com"
+    base = "https://verix-x247.onrender.com"
   }
   return base.replace(/\/$/, "")
 }
