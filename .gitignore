@@ -115,7 +115,7 @@ scratch/
 .gemini/
 graphify-out/
 
-# --- Video & Video Editing Artifacts ---
+# --- Video & Audio Editing Artifacts ---
 video/
 demo-video/
 *.mp4
@@ -123,4 +123,9 @@ demo-video/
 *.avi
 *.mkv
 *.webm
+*.mp3
+*.wav
+test_speakers.py
+verix_*.jpg
+verix_*.png
 
